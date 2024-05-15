@@ -10,7 +10,7 @@ namespace SkolaProjekat
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
+           // ApplicationConfiguration.Initialize(); //ZAKOMENTARISAO SAM JA
             Application.Run(new Form1());
         }
     }
