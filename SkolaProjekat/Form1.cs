@@ -23,11 +23,11 @@ namespace SkolaProjekat
 
                 if (session != null)
                 {
-                    AngazovanSaDelomNorme? p = await session.LoadAsync<AngazovanSaDelomNorme>(1);//??
+                    AngazovanSaDelomNorme? p = await session.LoadAsync<AngazovanSaDelomNorme>("4567890123456");//jmbg nastavnika
                                                                                                   // MessageBox.Show($"Angazovanje sa delom norme sa ID: 61 \"{p.NazivPredmeta}\" je pronađena.");
 
                     
-                    MessageBox.Show($"Angazovanje sa delom norme sa ID: 61 \"{p.NazivPredmeta}\" je pronađeno.");
+                    MessageBox.Show($"Angazovanje sa delom norme sa ID: 4567890123456 \"{p.NazivPredmeta}\" je pronađeno.");
                     
                 }
             }
@@ -53,21 +53,9 @@ namespace SkolaProjekat
                 {
                     AngazovanSaDelomNorme angSaDelomNorme = new()
                     {
-                        JMBGNastavnika = "2102000436511",
                         NazivPredmeta = "Matematika",
-                        DatumAngazovanja = DateTime.Now
-                        /*
-                        Naziv = "Emmi Shop 15",
-                        Adresa = "Mačvanska 5",
-                        BrojTelefona = "018/999-999",
-                        RadniDan = "09-17",
-                        Subota = "10-15",
-                        Nedelja = "Ne radi" 
-                        Id(p => p.JMBGNastavnika, "JMBG_NASTAVNIKA").GeneratedBy.Assigned();
-
-                         Map(p => p.NazivPredmeta, "NAZIV_PREDMETA");
-                            Map(p => p.DatumAngazovanja, "DATUM_ANGAZOVANJA");
-                         */
+                        JMBGNastavnika = "2102000436511",
+                        DatumAngazovanja = DateTime.Now  
                     };
 
                     //await session.SaveAsync(p);
