@@ -8,6 +8,7 @@ namespace ProjekatSkola.Entiteti
 {
     public class AngazovanSaDelomNorme
     {
+        public virtual int Id { get; protected set; }
         public virtual string NazivPredmeta { get; set; }
         public virtual string JMBGNastavnika { get; set; }
         public virtual DateTime DatumAngazovanja { get; set; }

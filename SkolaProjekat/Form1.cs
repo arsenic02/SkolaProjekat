@@ -19,17 +19,25 @@ namespace SkolaProjekat
 
             try
             {
-                session = DataLayer.GetSession();
+                session = DataLayer.GetSession();//ovde baca exception
 
                 if (session != null)
                 {
-                    AngazovanSaDelomNorme? p = await session.LoadAsync<AngazovanSaDelomNorme>(61);//??
-                    MessageBox.Show($"Angazovanje sa delom norme sa ID: 61 \"{p.NazivPredmeta}\" je pronađena.");
+                    AngazovanSaDelomNorme? p = await session.LoadAsync<AngazovanSaDelomNorme>(1);//??
+                                                                                                  // MessageBox.Show($"Angazovanje sa delom norme sa ID: 61 \"{p.NazivPredmeta}\" je pronađena.");
+
+                    
+                    MessageBox.Show($"Angazovanje sa delom norme sa ID: 61 \"{p.NazivPredmeta}\" je pronađeno.");
+                    
                 }
             }
             catch (Exception ec)
             {
                 MessageBox.Show(ec.Message);
+            }
+            finally
+            {
+                session?.Close();//ovo i finally blok sam ja dodao
             }
         }
 

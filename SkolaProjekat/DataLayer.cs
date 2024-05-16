@@ -25,7 +25,7 @@ public static class DataLayer
             {
                 if (factory == null)
                 {
-                    factory = CreateSessionFactory();
+                    factory = CreateSessionFactory();//ovde baca exception
                 }
             }
         }
@@ -40,20 +40,23 @@ public static class DataLayer
             // ShowSql prikazuje SQL koji je generisan, ali u .NET Core aplikacijama se prikazuju u konzoli.
             // Ako se aplikacija pokrene sa dotnet bin\Debug\net8.0-windows\ProdavnicaIgracaka.dll, mogu da se vide
 
-            string cs = ConfigurationManager.ConnectionStrings[""].ConnectionString;// ja treba da stavim moj connection string
-            //string cs = ConfigurationManager.ConnectionStrings["OracleCS"].ConnectionString; //ovako je bilo
+            
+            string cs = ConfigurationManager.ConnectionStrings["OracleCS"].ConnectionString;
+            
             
             var cfg = OracleManagedDataClientConfiguration.Oracle10
                         .ShowSql()
                         .ConnectionString(c => c.Is(cs));
+            
+            
 
             return Fluently.Configure()
                     .Database(cfg)
-                    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<ImaMapiranja>())
+                    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<AngazovanSaDelomNormeMapiranja>())
                     //.ExposeConfiguration(BuildSchema)
-                    .BuildSessionFactory();
+                    .BuildSessionFactory();//ovde negde je exception
         }
-        catch (Exception e)
+        catch (Exception e)//prilikom returna hvata exception
         {
             MessageBox.Show(e.Message);
             return null;
