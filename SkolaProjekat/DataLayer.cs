@@ -25,7 +25,7 @@ public static class DataLayer
             {
                 if (factory == null)
                 {
-                    factory = CreateSessionFactory();//ovde baca exception
+                    factory = CreateSessionFactory();
                 }
             }
         }
