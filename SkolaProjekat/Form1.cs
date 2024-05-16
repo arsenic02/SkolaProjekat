@@ -13,7 +13,7 @@ namespace SkolaProjekat
             InitializeComponent();
         }
 
-        private void btnUcitavanje_Click(object sender, EventArgs e)
+        private async void btnUcitavanje_Click(object sender, EventArgs e)
         {
             ISession? session = null;
 
@@ -33,7 +33,7 @@ namespace SkolaProjekat
             }
         }
 
-        private void btnDodaj_Click(object sender, EventArgs e)
+        private async void btnDodaj_Click(object sender, EventArgs e)
         {
             ISession? session = null;
 
@@ -43,11 +43,11 @@ namespace SkolaProjekat
 
                 if (session != null)
                 {
-                    Ima angSaDelomNorme = new()
+                    AngazovanSaDelomNorme angSaDelomNorme = new()
                     {
-                        JMBGNastavnika = "2102000436511";
-                        NazivPredmeta = "Matematika";
-                        DatumAngazovanja = "1/1/2020";
+                        JMBGNastavnika = "2102000436511",
+                        NazivPredmeta = "Matematika",
+                        DatumAngazovanja = DateTime.Now
                         /*
                         Naziv = "Emmi Shop 15",
                         Adresa = "Mačvanska 5",
@@ -63,7 +63,7 @@ namespace SkolaProjekat
                     };
 
                     //await session.SaveAsync(p);
-                    await session.SaveOrUpdateAsync(i);
+                    await session.SaveOrUpdateAsync(angSaDelomNorme);
                     await session.FlushAsync();//sve modifikacije koje imamo budu prosledjene bazi
                 }
             }
@@ -77,5 +77,6 @@ namespace SkolaProjekat
             }
         }
     }
-    }
 }
+    
+    
