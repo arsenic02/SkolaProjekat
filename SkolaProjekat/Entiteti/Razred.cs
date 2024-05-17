@@ -8,6 +8,7 @@ namespace ProjekatSkola.Entiteti
 {
     public class Razred
     {
+        //public virtual int Id { get; protected set; }
         public virtual int RedniBrojRazreda { get; set; }
         public Razred()
         {

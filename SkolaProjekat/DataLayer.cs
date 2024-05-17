@@ -3,6 +3,8 @@ using FluentNHibernate.Cfg;
 using NHibernate;
 using System.Configuration;
 using SkolaProjekat.Mapiranja;
+using Oracle.ManagedDataAccess.Client;
+using ProjekatSkola.Entiteti;
 
 namespace SkolaProjekat;
 
@@ -39,32 +41,28 @@ public static class DataLayer
         {
             // ShowSql prikazuje SQL koji je generisan, ali u .NET Core aplikacijama se prikazuju u konzoli.
             // Ako se aplikacija pokrene sa dotnet bin\Debug\net8.0-windows\ProdavnicaIgracaka.dll, mogu da se vide
-
-            
             string cs = ConfigurationManager.ConnectionStrings["OracleCS"].ConnectionString;
-            
-            
             var cfg = OracleManagedDataClientConfiguration.Oracle10
                         .ShowSql()
                         .ConnectionString(c => c.Is(cs));
-            
-            
 
             return Fluently.Configure()
                     .Database(cfg)
-                    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<AngazovanSaDelomNormeMapiranja>())
+                    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Razred>())
                     //.ExposeConfiguration(BuildSchema)
-                    .BuildSessionFactory();//ovde negde je exception
+                    .BuildSessionFactory();
         }
-        catch (Exception e)//prilikom returna hvata exception
+        catch (Exception e)
         {
             MessageBox.Show(e.Message);
             return null;
         }
     }
 
+    /*
     /*private static void BuildSchema(NHibernate.Cfg.Configuration cfg)
     {
         // Konfiguracija
     }*/
+
 }

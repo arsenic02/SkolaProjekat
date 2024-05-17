@@ -1,12 +1,23 @@
-﻿using System;
+﻿using ProjekatSkola.Entiteti;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentNHibernate.Mapping;
 
 namespace SkolaProjekat.Mapiranja
 {
-    internal class RazredMapiranja
+    public class RazredMapiranja:ClassMap<Razred>
     {
+        public RazredMapiranja()
+        {
+            Table("RAZRED");
+
+            Id(p => p.RedniBrojRazreda, "REDNI_BROJ_RAZREDA").GeneratedBy.Assigned();
+
+            //Map(p => p.RedniBrojRazreda, "REDNI_BROJ_RAZREDA");
+        }
+       
     }
 }

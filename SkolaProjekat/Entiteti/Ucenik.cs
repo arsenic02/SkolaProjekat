@@ -8,7 +8,8 @@ namespace ProjekatSkola.Entiteti
 {
     public class Ucenik
     {
-        public virtual int JedinstveniUpisniBroj { get; set; }
+        public virtual int Id { get; protected set; }
+        public virtual string JedinstveniUpisniBroj { get; set; }
         public virtual string Ime { get; set; }
         public virtual string Prezime { get; set; }
         public virtual string AdresaStanovanja { get; set; }
@@ -16,5 +17,7 @@ namespace ProjekatSkola.Entiteti
         public virtual DateTime DatumUpisa { get; set; }
         public virtual int RedniBrojRazreda { get; set; }
         public Ucenik() { }
+
+        public virtual Smer JeUpisan { get; set; }
     }
 }
