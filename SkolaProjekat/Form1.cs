@@ -179,14 +179,14 @@ namespace SkolaProjekat
 
                     Ucenik u = new()
                     {
-                       JedinstveniUpisniBroj="145",
-                       Ime = "Stefan",
-                       Prezime = "Stefanovic",
-                       AdresaStanovanja = "Niska 22",
-                       //NazivSmera= "Arhitektura",
-                       DatumUpisa = DateTime.Now,
-                       RedniBrojRazreda = 3,
-                       JeUpisan = s
+                        JedinstveniUpisniBroj = "145",
+                        Ime = "Stefan",
+                        Prezime = "Stefanovic",
+                        AdresaStanovanja = "Niska 22",
+                        //NazivSmera= "Arhitektura",
+                        DatumUpisa = DateTime.Now,
+                        RedniBrojRazreda = 3,
+                        JeUpisan = s
                     };
 
                     // Ako ne koristimo Cascade, onda moramo ručno da dodamo Odeljenje u bazu
@@ -230,6 +230,56 @@ namespace SkolaProjekat
             {
                 session?.Close();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btnManyToMany_Click(object sender, EventArgs e)
+        {
+            ISession? session = null;
+
+        try
+        {
+            session = DataLayer.GetSession();
+
+            if (session != null)
+            {
+                Predmet predmet = await session.LoadAsync<Predmet>("Matematika");
+
+                StringBuilder sb = new();
+                sb.AppendLine($"Radnik sa ID: 81 i imenom: {predmet.NazivPredmeta} se slusa na smerovima:");
+
+                foreach (Smer smer in predmet.Smerovi)
+                {
+                    sb.AppendLine(smer.ToString());
+                }
+
+                MessageBox.Show(sb.ToString());
+
+                Smer s = await session.LoadAsync<Smer>("Elektrotehnika");
+
+                sb.Clear();
+                sb.AppendLine($"Smer sa nazivom: {s.NazivSmera} ima predmete:");
+
+                foreach (Predmet p in s.Predmeti)
+                {
+                    sb.AppendLine(p.ToString());
+                }
+
+                MessageBox.Show(sb.ToString());
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        finally
+        {
+            session?.Close();
+        }
         }
     }
 }

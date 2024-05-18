@@ -34,6 +34,7 @@
             btnOneToMany = new Button();
             btnUcitavanjeRazreda = new Button();
             btnDodavanjeUcenika = new Button();
+            btnManyToMany = new Button();
             SuspendLayout();
             // 
             // btnUcitavanje
@@ -96,11 +97,22 @@
             btnDodavanjeUcenika.UseVisualStyleBackColor = true;
             btnDodavanjeUcenika.Click += btnDodavanjeUcenika_Click;
             // 
+            // btnManyToMany
+            // 
+            btnManyToMany.Location = new Point(310, 251);
+            btnManyToMany.Name = "btnManyToMany";
+            btnManyToMany.Size = new Size(226, 34);
+            btnManyToMany.TabIndex = 6;
+            btnManyToMany.Text = "Many-to-many";
+            btnManyToMany.UseVisualStyleBackColor = true;
+            btnManyToMany.Click += btnManyToMany_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnManyToMany);
             Controls.Add(btnDodavanjeUcenika);
             Controls.Add(btnUcitavanjeRazreda);
             Controls.Add(btnOneToMany);
@@ -120,5 +132,6 @@
         private Button btnOneToMany;
         private Button btnUcitavanjeRazreda;
         private Button btnDodavanjeUcenika;
+        private Button btnManyToMany;
     }
 }

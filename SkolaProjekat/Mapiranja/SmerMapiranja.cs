@@ -23,20 +23,20 @@ namespace SkolaProjekat.Mapiranja
 
             // 1:N SMER-UCENIK
             //U KEY COLUMN IDE STRANI KLJUC IZ UCENIK
-            HasMany(p => p.Ucenici).KeyColumn("NAZIV_SMERA").LazyLoad().Cascade.All().Inverse();
+            HasMany(p => p.Ucenici).KeyColumn("NAZIV_SMERA").LazyLoad().Cascade.All().Inverse();//zastoovde kaze da je invalid expression term '/' kada ga nema
 
             //ZA OSTALE VEZE
-            // Inverse mora da bude samo na jednoj strani. Znači prepuštamo tabeli Radnik da vodi računa o ovoj vezi
+            // Inverse mora da bude samo na jednoj strani. Znači prepuštamo tabeli Predmet da vodi računa o ovoj vezi
             // Ovakav pristup sa Table("RADI_U") se koristi kada nemamo dodatnih atributa u tabeli veze!
-            /*HasManyToMany(p => p.Radnici)
-                .Table("RADI_U")
-                .ParentKeyColumn("BROJP")
-                .ChildKeyColumn("JBR_RADNIK")
-                .Cascade.All()
-                .Inverse();
+            HasManyToMany(p => p.Predmeti)
+                .Table("POSEDUJE")
+                .ParentKeyColumn("NAZIV_SMERA")
+                .ChildKeyColumn("NAZIV_PREDMETA")
+                .Cascade.All();
+                //.Inverse(); ima na drugoj strani inverse
 
             // Dok ovakav kada imamo dodatni entitet RadiU
-            HasMany(p => p.RadniciRadeU).KeyColumn("BROJP").LazyLoad().Cascade.All().Inverse();*/
+           // HasMany(p => p.RadniciRadeU).KeyColumn("BROJP").LazyLoad().Cascade.All().Inverse();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkolaProjekat.Entiteti;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,9 @@ namespace ProjekatSkola.Entiteti
         public virtual string TipPredmeta { get; set; }
         public virtual int JedinstveniBrojUcenika { get; set; }
         public virtual string NazivSmera { get; set; }
+
+        public virtual IList<Poseduje> SmeroveKojePoseduje { get; set; } = [];
+        public virtual IList<Smer> Smerovi { get; set; } = [];
         public Predmet()
         {
         }
