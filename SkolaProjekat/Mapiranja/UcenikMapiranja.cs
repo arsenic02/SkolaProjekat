@@ -19,7 +19,7 @@ namespace SkolaProjekat.Mapiranja
             Map(p => p.Ime, "IME");
             //Map(p => p.NazivSmera, "NAZIV_SMERA"); //STRANI KLJUC 
             Map(p => p.Prezime, "PREZIME");
-            Map(p => p.RedniBrojRazreda, "REDNI_BROJ_RAZRED");//STRANI KLJUC, KADA SE IZMODELUJE VEZA RAZRED PREMA UCENIK, BICE UBACENA  U REFERENCES
+            Map(p => p.RedniBrojRazreda, "REDNI_BROJ_RAZREDA");//STRANI KLJUC, KADA SE IZMODELUJE VEZA RAZRED PREMA UCENIK, BICE UBACENA  U REFERENCES
             Map(p => p.AdresaStanovanja, "ADRESA_STANOVANJA");
             Map(p => p.DatumUpisa, "DATUM_UPISA");
 

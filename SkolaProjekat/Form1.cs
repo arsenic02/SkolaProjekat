@@ -183,8 +183,10 @@ namespace SkolaProjekat
                        Ime = "Stefan",
                        Prezime = "Stefanovic",
                        AdresaStanovanja = "Niska 22",
-                       NazivSmera= "Arhitektura",
-                       DatumUpisa = DateTime.Now
+                       //NazivSmera= "Arhitektura",
+                       DatumUpisa = DateTime.Now,
+                       RedniBrojRazreda = 3,
+                       JeUpisan = s
                     };
 
                     // Ako ne koristimo Cascade, onda moramo ručno da dodamo Odeljenje u bazu
@@ -212,10 +214,10 @@ namespace SkolaProjekat
 
                     StringBuilder sb = new();
                     sb.AppendLine($"Upisan je smer sa ucenicima:");
-                    //sb.AppendLine(s);
+                    sb.AppendLine(s.ToString());
                     sb.AppendLine();
-                    sb.AppendLine($"Takođe, upisano je i odeljenje ove prodavnice sa podacima:");
-                   // sb.AppendLine(u);
+                    sb.AppendLine($"Takođe, upisano je i ucenik ovog smera sa podacima:");
+                    sb.AppendLine(u.ToString());
 
                     MessageBox.Show(sb.ToString());
                 }
