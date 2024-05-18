@@ -28,8 +28,11 @@ namespace SkolaProjekat.Mapiranja
             .Table("POSEDUJE")
             .ParentKeyColumn("NAZIV_PREDMETA")//BROJP
             .ChildKeyColumn("NAZIV_SMERA")
-            .Cascade.All()
-            .Inverse();
+            .Cascade.All();
+            //.Inverse();
+
+            // Dok ovakav kada imamo dodatni entitet RadiU
+            HasMany(p => p.PredmeteKojePredajeNastavnikSaDelomCasova).KeyColumn("NAZIV_PREDMETA").LazyLoad().Cascade.All().Inverse();
         }
     }
 }

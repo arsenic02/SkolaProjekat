@@ -21,7 +21,7 @@ public class AngazovanSaDelomNormeMapiranja: ClassMap<AngazovanSaDelomNorme>
         
          */
 
-        
+        /*
         Id(p => p.JMBGNastavnika, "JMBG_NASTAVNIKA").GeneratedBy.Assigned();
         Map(p => p.NazivPredmeta, "NAZIV_PREDMETA");//iako je NazivPredmeta primarni kljuc, bolje ovako radi
         
@@ -29,7 +29,15 @@ public class AngazovanSaDelomNormeMapiranja: ClassMap<AngazovanSaDelomNorme>
         Id(p => p.NazivPredmeta, "NAZIV_PREDMETA").GeneratedBy.Assigned();
         Map(p => p.JMBGNastavnika, "JMBG_NASTAVNIKA");
         */
-        //Map(p => p.DatumAngazovanja, "DATUM_ANGAZOVANJA");
+
+        CompositeId(p => p.Id)
+            .KeyReference(p => p.NastavnikSaDelomCasovaAngazovan, "JMBG_NASTAVNIKA")
+            .KeyReference(p => p.PredmetNaKomeAngazovanNastavnikSaDelomCasova, "NAZIV_PREDMETA");
+
+
+
+        Map(p => p.DatumAngazovanja, "DATUM_ANGAZOVANJA");
         
+
     }
 }

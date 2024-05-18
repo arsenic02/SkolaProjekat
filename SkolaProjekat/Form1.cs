@@ -3,6 +3,7 @@ using SkolaProjekat.Entiteti;*/
 //ovde je nepotrebno valjda
 using NHibernate;
 using ProjekatSkola.Entiteti;
+using SkolaProjekat.Entiteti;
 using System.Text;
 
 namespace SkolaProjekat
@@ -28,7 +29,7 @@ namespace SkolaProjekat
                                                                                                                // MessageBox.Show($"Angazovanje sa delom norme sa ID: 61 \"{p.NazivPredmeta}\" je pronađena.");
 
 
-                    MessageBox.Show($"Angazovanje sa delom norme sa ID: 4567890123456 \"{p.NazivPredmeta}\" je pronađeno.");
+                    //MessageBox.Show($"Angazovanje sa delom norme sa ID: 4567890123456 \"{p.NazivPredmeta}\" je pronađeno.");
 
                 }
             }
@@ -44,6 +45,7 @@ namespace SkolaProjekat
 
         private async void btnDodaj_Click(object sender, EventArgs e)
         {
+            /*
             ISession? session = null;
 
             try
@@ -71,7 +73,7 @@ namespace SkolaProjekat
             finally
             {
                 session?.Close();
-            }
+            }*/
         }
 
         private async void btnManyToOne_Click(object sender, EventArgs e)
@@ -240,46 +242,149 @@ namespace SkolaProjekat
         private async void btnManyToMany_Click(object sender, EventArgs e)
         {
             ISession? session = null;
-
-        try
-        {
-            session = DataLayer.GetSession();
-
-            if (session != null)
+            //ja nzm zasto ne radi lepo
+            try
             {
-                Predmet predmet = await session.LoadAsync<Predmet>("Matematika");
+                session = DataLayer.GetSession();
 
-                StringBuilder sb = new();
-                sb.AppendLine($"Radnik sa ID: 81 i imenom: {predmet.NazivPredmeta} se slusa na smerovima:");
-
-                foreach (Smer smer in predmet.Smerovi)
+                if (session != null)
                 {
-                    sb.AppendLine(smer.ToString());
+                    Predmet predmet = await session.LoadAsync<Predmet>("Matematika");
+
+                    StringBuilder sb = new();
+                    sb.AppendLine($"{predmet.NazivPredmeta} se slusa na smerovima:");
+
+                    foreach (Smer smer in predmet.Smerovi)
+                    {
+                        sb.AppendLine(smer.ToString());//zasto prazan string
+                    }
+
+                    MessageBox.Show(sb.ToString());
+
+                    Smer s = await session.LoadAsync<Smer>("Elektrotehnika");
+
+                    sb.Clear();
+                    sb.AppendLine($"Smer sa nazivom {s.NazivSmera} ima predmete:");//zasto prazan string
+
+                    foreach (Predmet p in s.Predmeti)
+                    {
+                        sb.AppendLine(p.ToString());
+                    }
+
+                    MessageBox.Show(sb.ToString());
                 }
-
-                MessageBox.Show(sb.ToString());
-
-                Smer s = await session.LoadAsync<Smer>("Elektrotehnika");
-
-                sb.Clear();
-                sb.AppendLine($"Smer sa nazivom: {s.NazivSmera} ima predmete:");
-
-                foreach (Predmet p in s.Predmeti)
-                {
-                    sb.AppendLine(p.ToString());
-                }
-
-                MessageBox.Show(sb.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                session?.Close();
             }
         }
-        catch (Exception ex)
+
+        private async void btnDodavanjePredmeta_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(ex.Message);
+            ISession? session = null;
+
+            try
+            {
+                session = DataLayer.GetSession();
+
+                if (session != null)
+                {
+                    Smer smer = new()
+                    {
+                        NazivSmera = "Medicinski tehnicar",
+                        MaksimalanBrojUcenika = 30
+                    };
+
+                    Predmet predmet = new()
+                    {
+
+                        NazivPredmeta = "Anatomija",
+                        TipPredmeta = "Osnovni",
+                        JedinstveniBrojUcenika = 123,
+                        NazivSmera = "Medicinski tehnicar" //i ovako i onako greska
+                    };
+
+                    // Radik upisuje koja je Prodavnica u kojoj radi,
+                    // Prodavnica upisuje Radnika koji radi, a posle upisivanja, ta veza se smešta
+                    // u tabelu RADI_U
+                    predmet.Smerovi.Add(smer);
+                    smer.Predmeti.Add(predmet);
+
+                    await session.SaveAsync(smer);
+                    await session.SaveAsync(predmet);
+
+                    await session.FlushAsync();
+
+                    MessageBox.Show($"""
+                    Radnik:
+                    {predmet.ToString()}
+                    radi u prodavnici:
+                    {smer.ToString()}.
+                    """);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                session?.Close();
+            }
         }
-        finally
+
+        private async void AbtnAngazovanSaDelomCasova_Click(object sender, EventArgs e)
         {
-            session?.Close();
-        }
+            ISession? session = null;
+            //radila je metoda i kako sad ne radi??
+            try
+            {
+                session = DataLayer.GetSession();
+
+                if (session != null)
+                {
+                    NastavnoOsobljeSaDelomCasova nastavnoOsobljeSaDelomCasova = await session.LoadAsync<NastavnoOsobljeSaDelomCasova>("4567890123456");
+                    Predmet predmet = await session.LoadAsync<Predmet>("Matematika");
+
+                    AngazovanSaDelomNorme angazovan = new()
+                    {
+                        Id = new AngazovanSaDelomNormeId()
+                        {
+                            PredmetNaKomeAngazovanNastavnikSaDelomCasova = predmet,
+                            NastavnikSaDelomCasovaAngazovan = nastavnoOsobljeSaDelomCasova
+                        },
+                        DatumAngazovanja = new DateTime(2011, 10, 12)
+                    };
+
+                    // radiU.Id.RadnikRadiU = radnik;
+                    // radiU.Id.ProdavnicaRadiU = prodavnica;
+
+                    await session.SaveAsync(angazovan);
+                    await session.FlushAsync();
+
+                    MessageBox.Show($"""
+                                 Radnik:
+                                 {predmet.ToString()}
+                                 se predaje od strane
+                                 {nastavnoOsobljeSaDelomCasova.ToString()}
+                                 od: {angazovan.DatumAngazovanja}
+                                 
+                                 """);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                session?.Close();
+            }
         }
     }
 }

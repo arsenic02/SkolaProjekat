@@ -32,8 +32,8 @@ namespace SkolaProjekat.Mapiranja
                 .Table("POSEDUJE")
                 .ParentKeyColumn("NAZIV_SMERA")
                 .ChildKeyColumn("NAZIV_PREDMETA")
-                .Cascade.All();
-                //.Inverse(); ima na drugoj strani inverse
+                .Cascade.All()
+                .Inverse(); //ima na drugoj strani inverse
 
             // Dok ovakav kada imamo dodatni entitet RadiU
            // HasMany(p => p.RadniciRadeU).KeyColumn("BROJP").LazyLoad().Cascade.All().Inverse();

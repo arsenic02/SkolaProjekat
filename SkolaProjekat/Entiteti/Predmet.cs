@@ -1,4 +1,4 @@
-﻿using SkolaProjekat.Entiteti;
+﻿//using SkolaProjekat.Entiteti;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +14,11 @@ namespace ProjekatSkola.Entiteti
         public virtual int JedinstveniBrojUcenika { get; set; }
         public virtual string NazivSmera { get; set; }
 
-        public virtual IList<Poseduje> SmeroveKojePoseduje { get; set; } = [];
-        public virtual IList<Smer> Smerovi { get; set; } = [];
+        public virtual IList<AngazovanSaDelomNorme> PredmeteKojePredajeNastavnikSaDelomCasova { get; set; } = [];
+        public virtual IList<Smer> Smerovi { get; set; } = new List<Smer>(); //[];
         public Predmet()
         {
+            //Smerovi = new List<Smer>();
         }
     }
 }
