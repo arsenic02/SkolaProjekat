@@ -12,7 +12,7 @@ namespace ProjekatSkola.Entiteti
         public virtual int Id { get; protected set; }
         public virtual required string NazivSmera { get; set; }
         public virtual uint MaksimalanBrojUcenika { get; set; }
-        public virtual IList<Ucenik> Ucenici { get; set; } = new List<Ucenik>(); //[];
+        public virtual IList<Ucenik> Ucenici { get; set; } = [];//new List<Ucenik>(); //[];
 
         public virtual IList<Predmet> Predmeti { get; set; } = new List<Predmet>(); //[];
 

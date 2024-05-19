@@ -2,6 +2,7 @@
 using SkolaProjekat.Entiteti;*/
 //ovde je nepotrebno valjda
 using NHibernate;
+using NHibernate.Linq;
 using ProjekatSkola.Entiteti;
 using SkolaProjekat.Entiteti;
 using System.Text;
@@ -186,30 +187,13 @@ namespace SkolaProjekat
                         Prezime = "Stefanovic",
                         AdresaStanovanja = "Niska 22",
                         //NazivSmera= "Arhitektura",
-                        DatumUpisa = DateTime.Now,
+                        //DatumUpisa = DateTime.Now,
+                        DatumUpisa = new DateTime(2021, 3, 3),
                         RedniBrojRazreda = 3,
                         JeUpisan = s
                     };
 
-                    // Ako ne koristimo Cascade, onda moramo ručno da dodamo Odeljenje u bazu
-                    // Pre nego što sačuvamo prodavnicu sa kojom je povezano
-                    // ova linija je mogla da bude i ispod, sve dok je pre Save za Prodavnicu
-                    // await session.SaveAsync(o);
-
-                    // U slučaju da čuvamo svaki objekat ponaosob, pre povezivanja, onda nam nisu neophodne
-                    // Cascade i Inverse
-
                     s.Ucenici.Add(u);
-
-                    // Takođe je neophodno Odeljenju podesiti Prodavnicu kojoj pripada.
-                    // Ukoliko to ne uradimo, Odeljenje će imati BROJP postavljen na NULL (FK ka Prodavnici)
-                    // što ne želimo (BROJP bi trebalo da je NOT NULL)
-                    // da u bazi ne bi imali Odeljenja koja nisu povezana ni sa jednom prodavnicom.
-                    // Dodeljivanje Prodavnice Odeljenju ovde nije potrebno, zato što je urađeno kroz inicijalizaciju Odeljenja
-                    // o.PripadaProdavnici = p;
-
-                    // Na primer, može da bude i ovde
-                    // await session.SaveAsync(o);
 
                     await session.SaveAsync(s);
                     await session.FlushAsync();
@@ -256,7 +240,8 @@ namespace SkolaProjekat
 
                     foreach (Smer smer in predmet.Smerovi)
                     {
-                        sb.AppendLine(smer.ToString());//zasto prazan string
+                        //sb.AppendLine(smer.ToString());//zasto prazan string
+                        sb.AppendLine(smer.NazivSmera);
                     }
 
                     MessageBox.Show(sb.ToString());
@@ -268,7 +253,8 @@ namespace SkolaProjekat
 
                     foreach (Predmet p in s.Predmeti)
                     {
-                        sb.AppendLine(p.ToString());
+                        //sb.AppendLine(p.ToString());
+                        sb.AppendLine(p.NazivPredmeta);
                     }
 
                     MessageBox.Show(sb.ToString());
@@ -341,6 +327,67 @@ namespace SkolaProjekat
         private async void AbtnAngazovanSaDelomCasova_Click(object sender, EventArgs e)
         {
             ISession? session = null;
+            try
+            {
+                session = DataLayer.GetSession();
+
+                if (session != null)
+                {
+                    // Učitavanje postojećih entiteta iz baze
+                    NastavnoOsobljeSaDelomCasova nastavnoOsobljeSaDelomCasova = await session.LoadAsync<NastavnoOsobljeSaDelomCasova>("4567890123456");
+                    Predmet predmet = await session.LoadAsync<Predmet>("Matematika");
+
+                    // Proveravanje da li veza već postoji
+                    var existingRecord = await session.Query<AngazovanSaDelomNorme>()
+                        .Where(a => a.Id.NastavnikSaDelomCasovaAngazovan.JMBG == nastavnoOsobljeSaDelomCasova.JMBG &&
+                                    a.Id.PredmetNaKomeAngazovanNastavnikSaDelomCasova.NazivPredmeta == predmet.NazivPredmeta)
+                        .FirstOrDefaultAsync();
+
+                    if (existingRecord == null)
+                    {
+                        // Kreiranje novog zapisa u tabeli ANGAZOVAN_SA_DELOM_NORME
+                        AngazovanSaDelomNorme angazovan = new()
+                        {
+                            Id = new AngazovanSaDelomNormeId()
+                            {
+                                PredmetNaKomeAngazovanNastavnikSaDelomCasova = predmet,
+                                NastavnikSaDelomCasovaAngazovan = nastavnoOsobljeSaDelomCasova
+                            },
+                            DatumAngazovanja = new DateTime(2011, 10, 12)
+                        };
+
+                        await session.SaveAsync(angazovan);
+                        await session.FlushAsync();
+
+                        MessageBox.Show($"""
+                          Radnik:
+                          {predmet.NazivPredmeta}
+                          se predaje od strane
+                          {nastavnoOsobljeSaDelomCasova.Ime} {nastavnoOsobljeSaDelomCasova.Prezime}
+                          od: {angazovan.DatumAngazovanja}
+                          """);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Veza između nastavnika i predmeta već postoji u bazi.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                session?.Close();
+            }
+        }
+
+
+        /*
+        private async void AbtnAngazovanSaDelomCasova_Click(object sender, EventArgs e)
+        {
+            ISession? session = null;
             //radila je metoda i kako sad ne radi??
             try
             {
@@ -385,8 +432,107 @@ namespace SkolaProjekat
             {
                 session?.Close();
             }
+        } */
+
+        private async void btnDodavanjeRazreda_Click(object sender, EventArgs e)
+        {
+            ISession? session = null;
+
+            try
+            {
+                session = DataLayer.GetSession();
+
+                if (session != null)
+                {
+                    Razred r = new()
+                    {
+                        RedniBrojRazreda = 5
+                    };
+
+                    //await session?.SaveAsync(p);
+                    await session.SaveOrUpdateAsync(r);
+                    await session.FlushAsync();
+
+                    MessageBox.Show($"Dodat je razred sa rednim brojem {r.RedniBrojRazreda}");
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                session?.Close();
+            }
+        }
+
+        private async void btnUcitavanjeRazrednogVeca_Click(object sender, EventArgs e)
+        {
+            ISession? session = null;
+
+            try
+            {
+                session = DataLayer.GetSession();
+
+                if (session != null)
+                {
+                    RoditeljskoVece? rv = await session.LoadAsync<RoditeljskoVece>("2345678901234");
+                    MessageBox.Show($"Roditlejsko vece sa JMBG:  \"{rv.JMBG}\" je pronađeno");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                session?.Close();
+            }
+        }
+
+        private async void btnDodavanjeRazrednogVeca_Click(object sender, EventArgs e)
+        {
+            ISession? session = null;
+
+            try
+            {
+                session = DataLayer.GetSession();
+
+                if (session != null)
+                {
+                    RoditeljskoVece rv = new()
+                    {
+                        JMBG = "1209348576381",
+                        ImeRoditelja = "Vladimir",
+                        PrezimeRoditelja = "Vladimirovic",
+                        Telefon = "0647722123"
+                    };
+
+                    //await session?.SaveAsync(p);
+                    await session.SaveOrUpdateAsync(rv);
+                    await session.FlushAsync();
+
+                    MessageBox.Show($"Dodato je roditeljsko vece sa roditeljem koji se zove: {rv.ImeRoditelja} {rv.PrezimeRoditelja}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                session?.Close();
+            }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
+
     
     

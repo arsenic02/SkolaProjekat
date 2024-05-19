@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using ProjekatSkola.Entiteti;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SkolaProjekat.Mapiranja
 {
-    public class SmerMapiranja:ClassMap<ProjekatSkola.Entiteti.Smer>
+    public class SmerMapiranja:ClassMap<Smer>
     {
         public SmerMapiranja()
         {
@@ -23,7 +24,7 @@ namespace SkolaProjekat.Mapiranja
 
             // 1:N SMER-UCENIK
             //U KEY COLUMN IDE STRANI KLJUC IZ UCENIK
-            HasMany(p => p.Ucenici).KeyColumn("NAZIV_SMERA").LazyLoad().Cascade.All().Inverse();//zastoovde kaze da je invalid expression term '/' kada ga nema
+            HasMany(p => p.Ucenici).KeyColumn("NAZIV_SMERA").LazyLoad().Cascade.All().Inverse();
 
             //ZA OSTALE VEZE
             // Inverse mora da bude samo na jednoj strani. Znači prepuštamo tabeli Predmet da vodi računa o ovoj vezi
