@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkolaProjekat.Entiteti;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,9 @@ namespace ProjekatSkola.Entiteti
 {
     public class AngazovanSaPunomNormom
     {
-        public virtual string NazivPredmeta { get; set; }
-        public virtual string JMBGNastavnika { get; set; }
+        public virtual AngazovanSaPunomNormomId Id { get; set; }
+       // public virtual string NazivPredmeta { get; set; }
+        //public virtual string JMBGNastavnika { get; set; }
         public virtual DateTime DatumAngazovanja { get; set; }
         public AngazovanSaPunomNormom()
         {

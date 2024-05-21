@@ -7,18 +7,11 @@ using System.Threading.Tasks;
 
 namespace SkolaProjekat.Entiteti
 {
-    public class NastavnoOsobljeSaDelomCasova
+    public class NastavnoOsobljeSaDelomCasova : Zaposleni
     {
-        public virtual string JMBG { get; protected set; }
-        public virtual string Ime { get; set; }
-        public virtual string ImeRoditelja { get; set; }
-        public virtual string Prezime { get; set; }
-        public virtual string AdresaStanovanja { get; set; }
         public virtual int BrojCasovaNedeljno { get; set; }
         public virtual string? NazivOstalihSkola { get; set; }
-        
-
-        
+        public NastavnoOsobljeSaDelomCasova() { }
         public virtual IList<AngazovanSaDelomNorme> PredmeteKojePredaje { get; set; } = [];
     }
 }

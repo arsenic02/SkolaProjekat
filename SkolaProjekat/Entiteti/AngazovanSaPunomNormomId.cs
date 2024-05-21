@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace SkolaProjekat.Entiteti
 {
-    public class AngazovanSaDelomNormeId
+    public class AngazovanSaPunomNormomId
     {
-        public virtual required OsobljeSaPunomNormom NastavnikSaDelomCasovaAngazovan { get; set; }
-        public virtual required Predmet PredmetNaKomeAngazovanNastavnikSaDelomCasova { get; set; }
+        public virtual required OsobljeSaPunomNormom NastavnikSaPunomNormomAngazovan { get; set; }
+        public virtual required Predmet PredmetNaKomeAngazovanNastavnikSaPunomNormom { get; set; }
 
         public override bool Equals(object? obj)
         {
@@ -19,15 +19,15 @@ namespace SkolaProjekat.Entiteti
                 return true;
             }
 
-            if (obj?.GetType() != typeof(AngazovanSaDelomNormeId))
+            if (obj?.GetType() != typeof(AngazovanSaPunomNormomId))
             {
                 return false;
             }
 
-            AngazovanSaDelomNormeId compare = (AngazovanSaDelomNormeId)obj;
+            AngazovanSaPunomNormomId compare = (AngazovanSaPunomNormomId)obj;
 
-            return NastavnikSaDelomCasovaAngazovan?.JMBG == compare.NastavnikSaDelomCasovaAngazovan?.JMBG &&
-                   PredmetNaKomeAngazovanNastavnikSaDelomCasova?.NazivPredmeta == compare.PredmetNaKomeAngazovanNastavnikSaDelomCasova?.NazivPredmeta;
+            return NastavnikSaPunomNormomAngazovan?.JMBG == compare.NastavnikSaPunomNormomAngazovan?.JMBG &&
+                   PredmetNaKomeAngazovanNastavnikSaPunomNormom?.NazivPredmeta == compare.PredmetNaKomeAngazovanNastavnikSaPunomNormom?.NazivPredmeta;
 
             /*
              * Drugi pristup, ali problem može da bude nasleđivanje.

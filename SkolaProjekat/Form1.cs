@@ -446,7 +446,7 @@ namespace SkolaProjekat
                 {
                     Razred r = new()
                     {
-                        RedniBrojRazreda = 5
+                        RedniBrojRazreda = 77
                     };
 
                     //await session?.SaveAsync(p);
