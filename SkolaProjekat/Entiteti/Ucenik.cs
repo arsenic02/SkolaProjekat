@@ -20,5 +20,6 @@ namespace ProjekatSkola.Entiteti
         public Ucenik() { }
 
         public virtual required Smer JeUpisan { get; set; }// ili mozda?
+        public virtual required Ocena JeDobio { get; set; }// ili mozda?
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SkolaProjekat.Mapiranja
 {
-    internal class JeRoditeljMapiranja
+    public class JeRoditeljMapiranja
     {
     }
 }

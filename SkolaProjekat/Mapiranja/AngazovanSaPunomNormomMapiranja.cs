@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SkolaProjekat.Mapiranja
 {
-    internal class AngazovanSaPunomNormomMapiranja : ClassMap<AngazovanSaPunomNormom>
+    public class AngazovanSaPunomNormomMapiranja : ClassMap<AngazovanSaPunomNormom>
     {
         public AngazovanSaPunomNormomMapiranja()
         {

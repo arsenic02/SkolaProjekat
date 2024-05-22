@@ -27,6 +27,7 @@ namespace SkolaProjekat.Mapiranja
             Map(p => p.RedniBrojRazreda, "REDNI_BROJ_RAZREDA");//STRANI KLJUC, KADA SE IZMODELUJE VEZA RAZRED PREMA UCENIK, BICE UBACENA  U REFERENCES
             // 1:N Smer-Ucenik
             References(p => p.JeUpisan).Column("NAZIV_SMERA").LazyLoad();
+            References(p => p.JeDobio).Columns("DATUM_DOBIJANJA_OCENE", "NAZIV_PREDMETA").LazyLoad();
         }
     }
 }
