@@ -16,24 +16,7 @@ namespace ProjekatSkola.Entiteti
         public Ocena()
         {
         }
-        public override bool Equals(object obj)
-        {
-            var other = obj as Ocena;
-            if (other == null) return false;
-
-            return DatumDobijanjaOcene == other.DatumDobijanjaOcene &&
-                   NazivPredmeta == other.NazivPredmeta;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int hash = 17;
-                hash = hash * 23 + DatumDobijanjaOcene.GetHashCode();
-                hash = hash * 23 + (NazivPredmeta != null ? NazivPredmeta.GetHashCode() : 0);
-                return hash;
-            }
-        }
+        public virtual required Ucenik JeDobio { get; set; }
+        public virtual required Predmet JeIz { get; set; }
     }
 }

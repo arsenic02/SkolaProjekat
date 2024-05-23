@@ -17,6 +17,7 @@ namespace SkolaProjekat.Mapiranja
             Id(p => p.RedniBrojRazreda, "REDNI_BROJ_RAZREDA").GeneratedBy.Assigned();
 
             //Map(p => p.RedniBrojRazreda, "REDNI_BROJ_RAZREDA");
+            HasMany(x => x.Ucenici).KeyColumn("REDNI_BROJ_RAZREDA").LazyLoad().Cascade.All().Inverse();
         }
        
     }

@@ -189,7 +189,7 @@ namespace SkolaProjekat
                         //NazivSmera= "Arhitektura",
                         //DatumUpisa = DateTime.Now,
                         DatumUpisa = new DateTime(2021, 3, 3),
-                        RedniBrojRazreda = 3,
+                        //RedniBrojRazreda = 3,//zamenjeno sa svojstvomPohadja
                         JeUpisan = s
                     };
 

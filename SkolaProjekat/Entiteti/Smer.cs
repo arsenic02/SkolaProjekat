@@ -14,14 +14,14 @@ namespace ProjekatSkola.Entiteti
         public virtual string MaksimalanBrojUcenika { get; set; }
         public virtual IList<Ucenik> Ucenici { get; set; } = [];//new List<Ucenik>(); //[];
 
-        public virtual IList<Predmet> Predmeti { get; set; } = new List<Predmet>(); //[];
+        public virtual IList<Predmet> Predmeti { get; set; }
 
        // public virtual IList<Poseduje> SmerPoseduje { get; set; } = [];
 
         public Smer()
         {/*
-            Ucenici = new List<Ucenik>();
-            Predmeti = new List<Predmet>(); */
+            Ucenici = new List<Ucenik>();*/
+            Predmeti = new List<Predmet>(); 
         }
     }
 }

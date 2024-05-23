@@ -12,6 +12,8 @@ namespace ProjekatSkola.Entiteti
         public virtual int RedniBrojRazreda { get; set; }
         public Razred()
         {
+            Ucenici = new List<Ucenik>();
         }
+        public virtual IList<Ucenik> Ucenici { get; set; }
     }
 }

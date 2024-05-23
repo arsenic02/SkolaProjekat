@@ -12,22 +12,22 @@ namespace SkolaProjekat.Mapiranja
     {
         public OcenaMapiranja()
         {
-            Table("Ocene");
+            Table("Ocena");
 
             // Definisanje kompozitnog ključa
             CompositeId()
-                .KeyProperty(x => x.DatumDobijanjaOcene, "DatumDobijanjaOcene")
-                .KeyProperty(x => x.NazivPredmeta, "NazivPredmeta");
+                .KeyProperty(x => x.DatumDobijanjaOcene, "DATUM_DOBIJANJA_OCENE")
+                .KeyProperty(x => x.NazivPredmeta, "NAZIV_PREDMETA");
 
-            CompositeId()
-           .KeyProperty(x => x.NazivPredmeta, "NazivPredmeta")
-           .KeyProperty(x => x.DatumDobijanjaOcene, "DatumDobijanjaOcene");
+            //  Map(x => x.JedinstveniBrojUcenika).Column("JBU");
+            // 1:N Ucenik-Ocena
+            References(p => p.JeDobio).Column("JBU").LazyLoad();
+            References(p => p.JeIz).Column("NAZIV_PREDMETA").LazyLoad();
 
-            Map(x => x.JedinstveniBrojUcenika).Column("JedinstveniBrojUcenika");
+            Map(x => x.NumerickaVrednost).Column("NUMERICKA_VREDNOST");
+            Map(x => x.TekstualniOpis).Column("TEKSTUALNI_OPIS");
 
-            Map(x => x.NumerickaVrednost).Column("NumerickaVrednost");
-
-            Map(x => x.TekstualniOpis).Column("TekstualniOpis");
+           
         }
     }
 }
