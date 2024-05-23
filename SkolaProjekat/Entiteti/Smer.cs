@@ -13,8 +13,7 @@ namespace ProjekatSkola.Entiteti
         public virtual required string NazivSmera { get; set; }
         public virtual string MaksimalanBrojUcenika { get; set; }
         public virtual IList<Ucenik> Ucenici { get; set; } = [];//new List<Ucenik>(); //[];
-
-        public virtual IList<Predmet> Predmeti { get; set; }
+        public virtual IList<Predmet> Predmeti { get; set; }//Posledica veze Ima N-M
 
        // public virtual IList<Poseduje> SmerPoseduje { get; set; } = [];
 

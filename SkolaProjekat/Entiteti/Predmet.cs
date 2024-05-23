@@ -15,10 +15,9 @@ namespace ProjekatSkola.Entiteti
         public virtual string NazivSmera { get; set; }
 
         public virtual IList<AngazovanSaDelomNorme> PredmeteKojePredajeNastavnikSaDelomCasova { get; set; } = [];
-        public virtual IList<Smer> Smerovi { get; set; } = new List<Smer>();//Posledica veze N-M
+        public virtual IList<Smer> Smerovi { get; set; } = new List<Smer>();//Posledica veze Ima N-M 
         public virtual IList<Ocena> Ocene { get; set; } //[];
-        public virtual Ucenik SlusaPredmet { get; set; }
-        public virtual Smer Pripada { get; set; }
+        public virtual Ucenik SlusaPredmet { get; set; }  
 
 
         public Predmet()

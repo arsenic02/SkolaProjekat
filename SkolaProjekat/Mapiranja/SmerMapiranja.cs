@@ -29,8 +29,12 @@ namespace SkolaProjekat.Mapiranja
             //ZA OSTALE VEZE
             // Inverse mora da bude samo na jednoj strani. Znači prepuštamo tabeli Predmet da vodi računa o ovoj vezi
             // Ovakav pristup sa Table("RADI_U") se koristi kada nemamo dodatnih atributa u tabeli veze!
-            HasMany(x => x.Predmeti).KeyColumn("NAZIV_SMERA").LazyLoad().Cascade.All().Inverse();
-
+            HasManyToMany(p => p.Predmeti)
+               .Table("IMA")
+               .ParentKeyColumn("NAZIV_SMERA")
+               .ChildKeyColumn("NAZIV_PREDMETA")
+               .Cascade.All()
+               .Inverse();
             // Dok ovakav kada imamo dodatni entitet RadiU
             // HasMany(p => p.RadniciRadeU).KeyColumn("BROJP").LazyLoad().Cascade.All().Inverse();
         }

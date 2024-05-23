@@ -31,7 +31,11 @@ namespace SkolaProjekat.Mapiranja
 
             Map(p => p.NazivSmera, "NAZIV_SMERA");
 
-            References(x => x.Pripada).Column("NAZIV_SMERA").LazyLoad();
+            HasManyToMany(p => p.Smerovi)
+            .Table("POSEDUJE")
+            .ParentKeyColumn("NAZIV_PREDMETA")//BROJP
+            .ChildKeyColumn("NAZIV_SMERA")
+            .Cascade.All();
 
             // Dok ovakav kada imamo dodatni entitet RadiU
             HasMany(p => p.PredmeteKojePredajeNastavnikSaDelomCasova).KeyColumn("NAZIV_PREDMETA").LazyLoad().Cascade.All().Inverse();
