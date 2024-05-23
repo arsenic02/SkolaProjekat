@@ -17,6 +17,7 @@ namespace ProjekatSkola.Entiteti
         public virtual IList<AngazovanSaDelomNorme> PredmeteKojePredajeNastavnikSaDelomCasova { get; set; } = [];
         public virtual IList<Smer> Smerovi { get; set; } = new List<Smer>();//Posledica veze Ima N-M 
         public virtual IList<Ocena> Ocene { get; set; } //[];
+        public virtual IList<Razred> Na { get; set; }
         public virtual Ucenik SlusaPredmet { get; set; }  
 
 
@@ -24,6 +25,7 @@ namespace ProjekatSkola.Entiteti
         {
             Smerovi = new List<Smer>();
             Ocene = new List<Ocena>();
+            Na = new List<Razred>();
         }
     }
     //Posledica prevodjenja alternative 8C

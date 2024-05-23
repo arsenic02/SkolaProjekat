@@ -38,6 +38,11 @@ namespace SkolaProjekat.Mapiranja
 
             HasMany(p => p.Predmeti).KeyColumn("NAZIV_PREDMETA").LazyLoad().Cascade.All().Inverse();
 
+            HasManyToMany(p => p.SuRoditelji)
+           .Table("JE_RODITELJ")
+           .ParentKeyColumn("JBU")
+           .ChildKeyColumn("JMBG_RODITELJA")
+           .Cascade.All();
 
         }
     }

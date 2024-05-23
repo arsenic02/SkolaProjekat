@@ -32,10 +32,16 @@ namespace SkolaProjekat.Mapiranja
             Map(p => p.NazivSmera, "NAZIV_SMERA");
 
             HasManyToMany(p => p.Smerovi)
-            .Table("POSEDUJE")
+            .Table("IMA")
             .ParentKeyColumn("NAZIV_PREDMETA")//BROJP
             .ChildKeyColumn("NAZIV_SMERA")
             .Cascade.All();
+
+            HasManyToMany(p => p.Na)
+           .Table("NA")
+           .ParentKeyColumn("NAZIV_PREDMETA")//BROJP
+           .ChildKeyColumn("REDNI_BROJ_RAZREDA")
+           .Cascade.All();
 
             // Dok ovakav kada imamo dodatni entitet RadiU
             HasMany(p => p.PredmeteKojePredajeNastavnikSaDelomCasova).KeyColumn("NAZIV_PREDMETA").LazyLoad().Cascade.All().Inverse();
@@ -43,7 +49,6 @@ namespace SkolaProjekat.Mapiranja
             //U KEY COLUMN IDE STRANI KLJUC IZ OCENE
             HasMany(p => p.Ocene).KeyColumn("NAZIV_PREDMETA").LazyLoad().Cascade.All().Inverse();
 
-            
         }
     }
     class OpsteobrazovniPredmetMapiranja: SubclassMap<OpsteobrazovniPredmet>

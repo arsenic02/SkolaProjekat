@@ -13,7 +13,9 @@ namespace ProjekatSkola.Entiteti
         public Razred()
         {
             Ucenici = new List<Ucenik>();
+            Na = new List<Predmet>();
         }
         public virtual IList<Ucenik> Ucenici { get; set; }
+        public virtual IList<Predmet> Na { get; set; }
     }
 }

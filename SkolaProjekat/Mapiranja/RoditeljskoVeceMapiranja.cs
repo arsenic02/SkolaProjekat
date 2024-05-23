@@ -19,6 +19,12 @@ namespace SkolaProjekat.Mapiranja
             Map(p => p.ImeRoditelja, "IME_RODITELJA");
             Map(p => p.PrezimeRoditelja, "PREZIME_RODITELJA");
             Map(p => p.Telefon, "TELEFON");
+
+           HasManyToMany(p => p.SuUcenici)
+          .Table("JE_RODITELJ")
+          .ParentKeyColumn("JMBG_RODITELJA")
+          .ChildKeyColumn("JBU")
+          .Cascade.All();
         }
     }
 }

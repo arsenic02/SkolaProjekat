@@ -18,6 +18,13 @@ namespace SkolaProjekat.Mapiranja
 
             //Map(p => p.RedniBrojRazreda, "REDNI_BROJ_RAZREDA");
             HasMany(x => x.Ucenici).KeyColumn("REDNI_BROJ_RAZREDA").LazyLoad().Cascade.All().Inverse();
+
+
+            HasManyToMany(p => p.Na)
+           .Table("NA")
+           .ParentKeyColumn("REDNI_BROJ_RAZREDA")//BROJP
+           .ChildKeyColumn("NAZIV_PREDMETA")
+           .Cascade.All();
         }
        
     }
