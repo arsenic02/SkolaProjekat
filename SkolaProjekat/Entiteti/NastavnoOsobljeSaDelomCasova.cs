@@ -11,7 +11,10 @@ namespace SkolaProjekat.Entiteti
     {
         public virtual int BrojCasovaNedeljno { get; set; }
         public virtual string? NazivOstalihSkola { get; set; }
-        public NastavnoOsobljeSaDelomCasova() { }
-        public virtual IList<AngazovanSaDelomNorme> PredmeteKojePredaje { get; set; } = [];
+        public NastavnoOsobljeSaDelomCasova() 
+        {
+            PredmeteKojePredaje = new List<AngazovanSaDelomNorme>();
+        }
+        public virtual IList<AngazovanSaDelomNorme> PredmeteKojePredaje { get; set; }
     }
 }

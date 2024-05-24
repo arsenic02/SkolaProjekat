@@ -10,7 +10,12 @@ namespace ProjekatSkola.Entiteti
     public class OsobljeSaPunomNormom:Zaposleni
     {
         public virtual int BrojCasova { get; set; }
-        public OsobljeSaPunomNormom() { }
-        public virtual IList<AngazovanSaPunomNormom> PredmeteKojePredaje { get; set; } = [];
+        public virtual IList<AngazovanSaPunomNormom> PredmeteKojePredaje { get; set; }
+
+        public OsobljeSaPunomNormom() 
+        {
+            PredmeteKojePredaje = new List<AngazovanSaPunomNormom>();
+        }
+        
     }
 }

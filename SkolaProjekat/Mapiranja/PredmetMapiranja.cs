@@ -21,8 +21,6 @@ namespace SkolaProjekat.Mapiranja
             // Primarni ključ koji se generiše korišćenjem trigger-a
             Id(p => p.NazivPredmeta, "NAZIV_PREDMETA").GeneratedBy.Assigned();
 
-           
-
             // Sva ostala svojstva
             // Map(p => p.NazivPredmeta, "NAZIV_PREDMETA");
            
