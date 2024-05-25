@@ -24,9 +24,6 @@ namespace SkolaProjekat.Mapiranja
             // Sva ostala svojstva
             // Map(p => p.NazivPredmeta, "NAZIV_PREDMETA");
 
-            //Map(p => p.JedinstveniBrojUcenika, "JBU");
-            References(p => p.SlusaPredmet).Column("JBU").LazyLoad();
-
             Map(p => p.NazivSmera, "NAZIV_SMERA");
 
             HasManyToMany(p => p.Smerovi)

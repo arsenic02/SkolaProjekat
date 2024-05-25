@@ -54,13 +54,13 @@ namespace SkolaProjekat
         public string? Prezime { get; set; }
         public string? AdresaStanovanja { get; set; }
         public DateTime DatumUpisa { get; set; }
-        public RazredBasic PohadjaRazred { get; set; }
-        public SmerBasic JeUpisan { get; set; }
+        public Razred PohadjaRazred { get; set; }
+        public Smer JeUpisan { get; set; }
 
         public UcenikPregled() 
         { }
 
-        public UcenikPregled(string jbu, string ime, string prezime, string adresa, DateTime datumUpisa, RazredBasic razred, SmerBasic smer)
+        public UcenikPregled(string jbu, string ime, string prezime, string adresa, DateTime datumUpisa, Razred razred, Smer smer)
         {
             JedinstveniUpisniBroj = jbu;
             Ime = ime;
@@ -298,8 +298,9 @@ namespace SkolaProjekat
     #region Ocena
     public class OcenaBasic
     {
+        public int Id { get; set; }
         public  string NazivPredmeta { get; set; }
-        public  int JedinstveniBrojUcenika { get; set; }
+        public  string JedinstveniBrojUcenika { get; set; }
         public  DateTime DatumDobijanjaOcene { get; set; }
         public  int NumerickaVrednost { get; set; }
         public  string TekstualniOpis { get; set; }
@@ -308,19 +309,32 @@ namespace SkolaProjekat
         public   PredmetBasic JeIz { get; set; }
       
         public OcenaBasic() { }
-        public OcenaBasic(string nazivPredmeta, int JBU, DateTime datumDobijanjaOcene, int numerickaVrednost, string tekstualniOpis) 
+        public OcenaBasic(string nazivPredmeta, string JBU, DateTime datumDobijanjaOcene, int numerickaVrednost, string tekstualniOpis) 
         {
             NazivPredmeta = nazivPredmeta;
             JedinstveniBrojUcenika = JBU;
             DatumDobijanjaOcene = datumDobijanjaOcene;
             NumerickaVrednost = numerickaVrednost;
             TekstualniOpis = tekstualniOpis;
-
         }
     }
     public class OcenaPregled
     {
-        public OcenaPregled() { }   
+        public int Id { get; set; }
+        public string NazivPredmeta { get; set; }
+        public string JedinstveniBrojUcenika { get; set; }
+        public DateTime DatumDobijanjaOcene { get; set; }
+        public int NumerickaVrednost { get; set; }
+        public string TekstualniOpis { get; set; }
+        public OcenaPregled() { }
+        public OcenaPregled(string nazivPredmeta, string JBU, DateTime datumDobijanjaOcene, int numerickaVrednost, string tekstualniOpis)
+        {
+            NazivPredmeta = nazivPredmeta;
+            JedinstveniBrojUcenika = JBU;
+            DatumDobijanjaOcene = datumDobijanjaOcene;
+            NumerickaVrednost = numerickaVrednost;
+            TekstualniOpis = tekstualniOpis;
+        }
     }
 
     #endregion

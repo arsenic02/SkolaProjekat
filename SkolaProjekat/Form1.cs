@@ -291,7 +291,7 @@ namespace SkolaProjekat
 
                         NazivPredmeta = "Anatomija",
                         TipPredmeta = "Osnovni",
-                        JedinstveniBrojUcenika = 123,
+                        //JedinstveniBrojUcenika = 123,
                         NazivSmera = "Medicinski tehnicar" //i ovako i onako greska
                     };
 

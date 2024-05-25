@@ -11,7 +11,6 @@ namespace ProjekatSkola.Entiteti
     {
         public virtual string NazivPredmeta { get; set; }
         public virtual string TipPredmeta { get; set; }
-        public virtual int JedinstveniBrojUcenika { get; set; }
         public virtual string NazivSmera { get; set; }
 
         public virtual IList<AngazovanSaDelomNorme> PredmeteKojePredajeNastavnikSaDelomCasova { get; set; }

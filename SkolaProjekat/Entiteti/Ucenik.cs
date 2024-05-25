@@ -10,14 +10,13 @@ namespace ProjekatSkola.Entiteti
     public class Ucenik
     {
         // public virtual int Id { get; protected set; }
-        public virtual required string JedinstveniUpisniBroj { get; set; }
+        public virtual string JedinstveniUpisniBroj { get; set; }
         public virtual string? Ime { get; set; }
         public virtual string? Prezime { get; set; }
         public virtual string? AdresaStanovanja { get; set; }
 
-        public virtual required Smer JeUpisan { get; set; }// ili mozda?
-        public virtual IList<Ocena> Ocene { get; set; }
-        public virtual IList<Predmet> Predmeti { get; set; }
+        public virtual Smer JeUpisan { get; set; }// ili mozda?
+        public virtual IList<Ocena> Ocene { get; set; }    
         public virtual Razred PohadjaRazred { get; set; }
         public virtual IList<RoditeljskoVece> SuRoditelji { get; set; }
 

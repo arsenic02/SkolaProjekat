@@ -14,10 +14,9 @@ namespace SkolaProjekat.Mapiranja
         {
             Table("Ocena");
 
-            // Definisanje kompozitnog ključa
-            CompositeId()
-                .KeyProperty(x => x.DatumDobijanjaOcene, "DATUM_DOBIJANJA_OCENE")
-                .KeyProperty(x => x.NazivPredmeta, "NAZIV_PREDMETA");
+            Id(x => x.Id)
+           .Column("Jedinstveni_kod_ocene")
+           .GeneratedBy.Identity();
 
             //  Map(x => x.JedinstveniBrojUcenika).Column("JBU");
             // 1:N Ucenik-Ocena
