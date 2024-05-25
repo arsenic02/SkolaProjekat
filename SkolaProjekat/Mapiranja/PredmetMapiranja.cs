@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SkolaProjekat.Mapiranja
 {
-    public class PredmetMapiranja: ClassMap<Predmet>
+    public class PredmetMapiranja : ClassMap<Predmet>
     {
         public PredmetMapiranja()
         {
@@ -16,14 +16,14 @@ namespace SkolaProjekat.Mapiranja
 
             //Kod mapiranja alternative 8C koristi se ova metoda, koja definise
             //kolonu na osnovu koje se odredjuje pripadnost konkretnoj podklasi
-            DiscriminateSubClassesOnColumn("TipPredmeta");
+            DiscriminateSubClassesOnColumn("TipPredmeta");//Tako se zapravo u bazi zove
 
             // Primarni ključ koji se generiše korišćenjem trigger-a
             Id(p => p.NazivPredmeta, "NAZIV_PREDMETA").GeneratedBy.Assigned();
 
             // Sva ostala svojstva
             // Map(p => p.NazivPredmeta, "NAZIV_PREDMETA");
-           
+
             //Map(p => p.JedinstveniBrojUcenika, "JBU");
             References(p => p.SlusaPredmet).Column("JBU").LazyLoad();
 
@@ -44,16 +44,26 @@ namespace SkolaProjekat.Mapiranja
             // Dok ovakav kada imamo dodatni entitet RadiU
             HasMany(p => p.PredmeteKojePredajeNastavnikSaDelomCasova).KeyColumn("NAZIV_PREDMETA").LazyLoad().Cascade.All().Inverse();
 
+            HasMany(p => p.PredmeteKojePredajeNastavnikSaPunomNormomCasova).KeyColumn("NAZIV_PREDMETA").LazyLoad().Cascade.All().Inverse();
+
             //U KEY COLUMN IDE STRANI KLJUC IZ OCENE
             HasMany(p => p.Ocene).KeyColumn("NAZIV_PREDMETA").LazyLoad().Cascade.All().Inverse();
 
         }
     }
-    class OpsteobrazovniPredmetMapiranja: SubclassMap<OpsteobrazovniPredmet>
+    class OpsteobrazovniPredmetMapiranja : SubclassMap<OpsteobrazovniPredmet>
     {
         public OpsteobrazovniPredmetMapiranja()
         {
             DiscriminatorValue("OOP");//OpsteObrazovniPredmet
+        }
+    }
+
+    class StrucniPredmetMapiranja : SubclassMap<StrucniPredmet>
+    {
+        public StrucniPredmetMapiranja() 
+        {
+            DiscriminatorValue("STR");//OpsteObrazovniPredmet
         }
     }
 }

@@ -13,10 +13,12 @@ namespace ProjekatSkola.Entiteti
         public virtual DateTime DatumDobijanjaOcene { get; set; }
         public virtual int NumerickaVrednost { get; set; }
         public virtual string TekstualniOpis { get; set; }
-        public Ocena()
-        {
-        }
+
         public virtual required Ucenik JeDobio { get; set; }
         public virtual required Predmet JeIz { get; set; }
+
+        public Ocena()
+        {
+        }    
     }
 }

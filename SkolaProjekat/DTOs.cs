@@ -6,44 +6,323 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace SkolaProjekat
 {
     #region Ucenik
+    public class UcenikBasic
+    {
+        public string JedinstveniUpisniBroj { get; set; }
+        public string? Ime { get; set; }
+        public string? Prezime { get; set; }
+        public string? AdresaStanovanja { get; set; }
+        public DateTime DatumUpisa { get; set; }
+        public RazredBasic PohadjaRazred { get; set; }
+        public SmerBasic JeUpisan { get; set; }
+
+        public  IList<OcenaBasic> Ocene { get; set; }
+        public  IList<PredmetBasic> Predmeti { get; set; }      
+        public  IList<RoditeljskoVeceBasic> SuRoditelji { get; set; }
+    
+        public UcenikBasic()
+        {
+            Ocene = new List<OcenaBasic>();
+            Predmeti = new List<PredmetBasic>();
+            SuRoditelji = new List<RoditeljskoVeceBasic>();
+        }
+
+        public UcenikBasic(string jbu, string ime,string prezime, string adresa,DateTime datumUpisa, RazredBasic razred,SmerBasic smer)
+        {
+            JedinstveniUpisniBroj = jbu;
+            Ime = ime;
+            Prezime = prezime;
+            AdresaStanovanja = adresa;
+            DatumUpisa = datumUpisa;
+            PohadjaRazred = razred;
+            JeUpisan = smer;
+
+            Ocene = new List<OcenaBasic>();
+            Predmeti = new List<PredmetBasic>();
+            SuRoditelji = new List<RoditeljskoVeceBasic>();   
+        }
+    }
+    public class UcenikPregled
+    {
+        public string JedinstveniUpisniBroj { get; set; }
+        public string? Ime { get; set; }
+        public string? Prezime { get; set; }
+        public string? AdresaStanovanja { get; set; }
+        public DateTime DatumUpisa { get; set; }
+        public RazredBasic PohadjaRazred { get; set; }
+        public SmerBasic JeUpisan { get; set; }
+
+        public UcenikPregled() 
+        { }
+
+        public UcenikPregled(string jbu, string ime, string prezime, string adresa, DateTime datumUpisa, RazredBasic razred, SmerBasic smer)
+        {
+            JedinstveniUpisniBroj = jbu;
+            Ime = ime;
+            Prezime = prezime;
+            AdresaStanovanja = adresa;
+            DatumUpisa = datumUpisa;
+            PohadjaRazred = razred;
+            JeUpisan = smer;
+        }
+    }
     #endregion
 
     #region Smer
+    public class SmerBasic 
+    {
+        public  int Id { get; protected set; }
+        public   string NazivSmera { get; set; }
+        public  string MaksimalanBrojUcenika { get; set; }
+        public  IList<UcenikBasic> Ucenici { get; set; } = [];//new List<Ucenik>(); //[];
+        public  IList<PredmetBasic> Predmeti { get; set; }//Posledica veze Ima N-M
+
+        public SmerBasic()
+        {
+            Ucenici = new List<UcenikBasic>();
+            Predmeti = new List<PredmetBasic>();
+        }
+        public SmerBasic(int id, string nazivSmera, string maxBrUcenika)
+        {
+            Id = id;
+            NazivSmera = nazivSmera;
+            MaksimalanBrojUcenika = maxBrUcenika;
+
+            Ucenici = new List<UcenikBasic>();
+            Predmeti = new List<PredmetBasic>();
+        }
+    }
+    public class SmerPregled
+    {
+        public  int Id { get; protected set; }
+        public   string NazivSmera { get; set; }
+        public  string MaksimalanBrojUcenika { get; set; }
+
+        public SmerPregled()
+        {
+
+        }
+
+        public SmerPregled(int id, string nazivSmera, string maxBrUcenika)
+        {
+            Id = id;
+            NazivSmera = nazivSmera;
+            MaksimalanBrojUcenika = maxBrUcenika;
+        }
+    }
     #endregion
 
     #region RoditeljskoVece
+    public class RoditeljskoVeceBasic
+    {
+        public  string JMBG { get; set; }
+        public  string ImeRoditelja { get; set; }
+        public  string PrezimeRoditelja { get; set; }
+        public  string Telefon { get; set; }
+        public IList<UcenikBasic> SuUcenici { get; set; }
+
+        public RoditeljskoVeceBasic() 
+        {
+            SuUcenici = new List<UcenikBasic>();
+        }
+        public RoditeljskoVeceBasic(string jmbg, string imeR, string prezime, string tel) 
+        {
+            JMBG = jmbg;
+            ImeRoditelja = imeR;
+            PrezimeRoditelja = prezime;
+            Telefon = tel;
+
+            SuUcenici = new List<UcenikBasic>();   
+        }
+    }
+    public class RoditeljskoVecePregled
+    {
+        public  string JMBG { get; set; }
+        public  string ImeRoditelja { get; set; }
+        public  string PrezimeRoditelja { get; set; }
+        public  string Telefon { get; set; }
+
+        public RoditeljskoVecePregled() { }
+
+        public RoditeljskoVecePregled(string jmbg, string imeR, string prezime, string tel)
+        {
+            JMBG = jmbg;
+            ImeRoditelja = imeR;
+            PrezimeRoditelja = prezime;
+            Telefon = tel;
+        }
+    }
+
 
     #endregion
 
     #region Razred
     public class RazredBasic
     {
+        public int RedniBrojRazreda { get; set; }
+        public IList<UcenikBasic> Ucenici { get; set; }
+        public IList<PredmetBasic> Na { get; set; }
         public RazredBasic() 
-        { }
+        { 
+            Ucenici = new List<UcenikBasic>();
+            Na = new List<PredmetBasic>();
+        }
+        public RazredBasic(int rbr)
+        {
+            RedniBrojRazreda = rbr;
+            Ucenici = new List<UcenikBasic>();
+            Na = new List<PredmetBasic>();
+        }
     }
     public class RazredPregled
     {
+        public int RedniBrojRazreda { get; set; }
         public RazredPregled()
         { }
+        public RazredPregled(int rbr)
+        {
+            RedniBrojRazreda = rbr;
+        }
     }
     #endregion
 
     #region Predmet
     public class PredmetBasic
     {
-        public PredmetBasic() { }
+        public  string NazivPredmeta { get; set; }
+        public  string TipPredmeta { get; set; }
+        public  int JedinstveniBrojUcenika { get; set; }
+        public  string NazivSmera { get; set; }
+
+        public  IList<AngazovanSaDelomNormeBasic> PredmeteKojePredajeNastavnikSaDelomCasova { get; set; }
+        public  IList<AngazovanSaPunomNormomBasic> PredmeteKojePredajeNastavnikSaPunomNormomCasova { get; set; }
+        public  IList<SmerBasic> Smerovi { get; set; } //Posledica veze Ima N-M 
+        public  IList<OcenaBasic> Ocene { get; set; } //[];
+        public  IList<RazredBasic> Na { get; set; }
+        public  UcenikBasic SlusaPredmet { get; set; }
+        public PredmetBasic()
+        {
+            PredmeteKojePredajeNastavnikSaDelomCasova = new List<AngazovanSaDelomNormeBasic>();
+            PredmeteKojePredajeNastavnikSaPunomNormomCasova = new List<AngazovanSaPunomNormomBasic>();
+            Smerovi = new List<SmerBasic>();
+            Ocene = new List<OcenaBasic>();
+            Na = new List<RazredBasic>();
+        }
+        public PredmetBasic(string nazivPredmeta, string tip, int JBU, string nazivSmera, UcenikBasic ucenik)
+        {
+            PredmeteKojePredajeNastavnikSaDelomCasova = new List<AngazovanSaDelomNormeBasic>();
+            PredmeteKojePredajeNastavnikSaPunomNormomCasova = new List<AngazovanSaPunomNormomBasic>();
+            Smerovi = new List<SmerBasic>();
+            Ocene = new List<OcenaBasic>();
+            Na = new List<RazredBasic>();
+
+            NazivPredmeta = nazivPredmeta;
+            TipPredmeta = tip;
+            JedinstveniBrojUcenika = JBU;
+            NazivSmera = nazivSmera;
+            SlusaPredmet = ucenik;
+        }
     }
+
+    public class OpsteobrazovniPredmetBasic : PredmetBasic
+    {
+        public OpsteobrazovniPredmetBasic()
+        { }
+
+        public OpsteobrazovniPredmetBasic(string nazivPredmeta, string tip, int JBU, string nazivSmera, UcenikBasic ucenik) : base(nazivPredmeta, tip, JBU, nazivSmera,ucenik)
+        {
+
+        }
+    }
+
+    public class StrucniPredmetBasic: PredmetBasic
+    {
+        public StrucniPredmetBasic()
+        { }
+
+        public StrucniPredmetBasic(string nazivPredmeta, string tip, int JBU, string nazivSmera, UcenikBasic ucenik) : base(nazivPredmeta, tip, JBU, nazivSmera, ucenik)
+        {
+
+        }
+    }
+
     public class PredmetPregled
     {
-        public PredmetPregled() { }
+        public  string NazivPredmeta { get; set; }
+        public  string TipPredmeta { get; set; }
+        public  int JedinstveniBrojUcenika { get; set; }
+        public  string NazivSmera { get; set; }      
+        public  Ucenik SlusaPredmet { get; set; }
+        public PredmetPregled()
+        {
+           
+        }
+        public PredmetPregled(string nazivPredmeta, string tip, int JBU, string nazivSmera, Ucenik ucenik)
+        {
+            NazivPredmeta = nazivPredmeta;
+            TipPredmeta = tip;
+            JedinstveniBrojUcenika = JBU;
+            NazivSmera = nazivSmera;
+            SlusaPredmet = ucenik;
+        }      
+    }
+
+    public class OpsteobrazovniPredmetPregled : PredmetPregled
+    {
+        public OpsteobrazovniPredmetPregled()
+        { }
+
+        public OpsteobrazovniPredmetPregled(string nazivPredmeta, string tip, int JBU, string nazivSmera, Ucenik ucenik) : base(nazivPredmeta, tip, JBU, nazivSmera, ucenik)
+        {
+
+        }
+    }
+
+    public class StrucniPredmetPregled : PredmetPregled
+    {
+        public StrucniPredmetPregled()
+        { }
+
+        public StrucniPredmetPregled(string nazivPredmeta, string tip, int JBU, string nazivSmera, Ucenik ucenik) : base(nazivPredmeta, tip, JBU, nazivSmera, ucenik)
+        {
+
+        }
     }
     #endregion
 
     #region Ocena
+    public class OcenaBasic
+    {
+        public  string NazivPredmeta { get; set; }
+        public  int JedinstveniBrojUcenika { get; set; }
+        public  DateTime DatumDobijanjaOcene { get; set; }
+        public  int NumerickaVrednost { get; set; }
+        public  string TekstualniOpis { get; set; }
+
+        public   UcenikBasic JeDobio { get; set; }
+        public   PredmetBasic JeIz { get; set; }
+      
+        public OcenaBasic() { }
+        public OcenaBasic(string nazivPredmeta, int JBU, DateTime datumDobijanjaOcene, int numerickaVrednost, string tekstualniOpis) 
+        {
+            NazivPredmeta = nazivPredmeta;
+            JedinstveniBrojUcenika = JBU;
+            DatumDobijanjaOcene = datumDobijanjaOcene;
+            NumerickaVrednost = numerickaVrednost;
+            TekstualniOpis = tekstualniOpis;
+
+        }
+    }
+    public class OcenaPregled
+    {
+        public OcenaPregled() { }   
+    }
+
     #endregion
 
     #region Osoblje
@@ -230,9 +509,6 @@ namespace SkolaProjekat
             this.PredmetNaKomeAngazovanNastavnikSaPunomNormom = predmetNaKomeAngazovanNastavnikSaPunomNormom;
         }
     }
-    #endregion
-
-    #region NastavnoOsobljeSaDelomCasova
     #endregion
 
     #region AngazovanSaDelomNorme
