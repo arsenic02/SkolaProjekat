@@ -196,8 +196,8 @@ namespace SkolaProjekat
                 ISession s = DataLayer.GetSession();
 
                 Smer sm = new Smer();
-                sm.NazivSmera = sm.NazivSmera;
-                sm.MaksimalanBrojUcenika = sm.MaksimalanBrojUcenika;
+                sm.NazivSmera = smer.NazivSmera;
+                sm.MaksimalanBrojUcenika = smer.MaksimalanBrojUcenika;
                 s.SaveOrUpdate(sm);
                 s.Flush();
                 s.Close();
@@ -221,6 +221,23 @@ namespace SkolaProjekat
             catch (Exception ec)
             {
                 Console.WriteLine("Greška prilikom brisanja smera: " + smer.NazivSmera + ";\n Greska:" + ec.Message);
+            }
+        }
+        public static void azurirajSmer(SmerBasic smer)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                Smer sm = s.Load<Smer>(smer.NazivSmera);
+                sm.NazivSmera = sm.NazivSmera;
+                sm.MaksimalanBrojUcenika = sm.MaksimalanBrojUcenika;
+                s.SaveOrUpdate(sm);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom azuriranja smera: " + smer.NazivSmera + ";\n Greska: " + ec.Message);
             }
         }
         #endregion
@@ -301,6 +318,27 @@ namespace SkolaProjekat
                 Console.WriteLine("Greška prilikom brisanja roditelja: " + roditelj.JMBG + ";\n Greska:" + ec.Message);
             }
         }
+        public static void azurirajRoditelja(RoditeljskoVeceBasic roditelj)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                RoditeljskoVece o = s.Load<RoditeljskoVece>(roditelj.JMBG);
+
+                o.JMBG = roditelj.JMBG;
+                o.ImeRoditelja = roditelj.ImeRoditelja;
+                o.PrezimeRoditelja = roditelj.PrezimeRoditelja;
+                o.Telefon = roditelj.Telefon;               
+
+                s.SaveOrUpdate(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom azuriranja roditelja: " + roditelj.JMBG + ";\n Greska: " + ec.Message);
+            }
+        }
         #endregion
 
         #region Razred
@@ -373,6 +411,23 @@ namespace SkolaProjekat
             catch (Exception ec)
             {
                 Console.WriteLine("Greška prilikom brisanja razreda: " + razred.RedniBrojRazreda + ";\n Greska:" + ec.Message);
+            }
+        }
+        public static void azurirajRazred(RazredBasic razred) 
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                Razred o = s.Load<Razred>(razred.RedniBrojRazreda);
+                o.RedniBrojRazreda = razred.RedniBrojRazreda;
+
+                s.SaveOrUpdate(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom azuriranja razreda: " + razred.RedniBrojRazreda + ";\n Greska: " + ec.Message);
             }
         }
         #endregion
@@ -1075,6 +1130,75 @@ namespace SkolaProjekat
                 Console.WriteLine("Greška prilikom brisanja  zaposlenog (nenastavno osoblje): " + JMBG + "; \nGreska:" + ec.Message);
             }
         }
+        public static void azurirajNastavnoOsobljeSaPunomNormom(NastavnoOsobljeSaPunomNormomBasic nastavnik)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                OsobljeSaPunomNormom o = s.Load<OsobljeSaPunomNormom>(nastavnik.JMBG);
+                o.JMBG = nastavnik.JMBG;
+                o.Ime = nastavnik.Ime;
+                o.Prezime = nastavnik.Prezime;
+                o.ImeRoditelja = nastavnik.ImeRoditelja;
+                o.BrojCasova = nastavnik.BrojCasova;
+                o.AdresaStanovanja = nastavnik.AdresaStanovanja;
+
+                s.SaveOrUpdate(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom azuriranja nastavnog osoblja sa punom normom: " + nastavnik.JMBG + ";\n Greska: " + ec.Message);
+            }
+        }
+        public static void azurirajNastavnoOsobljeSaDelomNorme(NastavnoOsobljeSaDelomNormeBasic nastavnik)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                NastavnoOsobljeSaDelomCasova o = s.Load<NastavnoOsobljeSaDelomCasova>(nastavnik.JMBG);
+                o.JMBG = nastavnik.JMBG;
+                o.Ime = nastavnik.Ime;
+                o.Prezime = nastavnik.Prezime;
+                o.ImeRoditelja = nastavnik.ImeRoditelja;
+                o.BrojCasovaNedeljno = nastavnik.BrojCasovaNedeljno;
+                o.AdresaStanovanja = nastavnik.AdresaStanovanja;
+                o.NazivOstalihSkola = nastavnik.NazivOstalihSkola;
+                s.Update(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom azuriranja nastavnog osoblja sa delom norme: " + nastavnik.JMBG + ";\n Greska: " + ec.Message);
+            }
+        }
+        public static void azurirajNenastavnoOsoblje(NenastavnoOsobljeBasic zaposleni)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                NenastavnoOsoblje o = s.Load<NenastavnoOsoblje>(zaposleni.JMBG);
+                o.JMBG = zaposleni.JMBG;
+                o.Ime = zaposleni.Ime;
+                o.Prezime = zaposleni.Prezime;
+                o.ImeRoditelja = zaposleni.ImeRoditelja;
+                o.AdresaStanovanja = zaposleni.AdresaStanovanja;
+                o.StrucnaSprema = zaposleni.StrucnaSprema;
+                o.ImeSektora = zaposleni.ImeSektora;
+                s.Update(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom azuriranja zaposlenog (nastavno osoblje): " + zaposleni.JMBG + ";\n Greska: " + ec.Message);
+            }
+        }
         #endregion
 
         #region AngazovanSaPunomNormom
@@ -1118,7 +1242,10 @@ namespace SkolaProjekat
             }
 
         }
+        public static void azurirajAngazovanjeSaPunomNormom(AngazovanSaPunomNormomBasic angazovanje)
+        {         
 
+        }
         #endregion
 
         #region AngazovanSaDelomNorme
@@ -1161,6 +1288,10 @@ namespace SkolaProjekat
             {
                 Console.WriteLine("Greška prilikom brisanja angazovanja sa delom norme " + ec.Message);
             }
+
+        }
+        public static void azurirajAngazovanjeSaDelomNorme()
+        {
 
         }
         #endregion

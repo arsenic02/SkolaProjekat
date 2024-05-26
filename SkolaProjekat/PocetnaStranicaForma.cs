@@ -6,12 +6,13 @@ using NHibernate.Linq;
 using ProjekatSkola.Entiteti;
 using SkolaProjekat.Entiteti;
 using System.Text;
+using SkolaProjekat.Forme;
 
 namespace SkolaProjekat
 {
-    public partial class Form1 : Form
+    public partial class PocetnaStranicaForma : Form
     {
-        public Form1()
+        public PocetnaStranicaForma()
         {
             InitializeComponent();
         }
@@ -529,7 +530,25 @@ namespace SkolaProjekat
 
         private void label1_Click(object sender, EventArgs e)
         {
+           
+        }
 
+        private void btnZaposleniForm_Click(object sender, EventArgs e)
+        {
+             ZaposleniForma zaposleniForma = new ZaposleniForma();
+            zaposleniForma.ShowDialog();
+        }
+
+        private void btnSmerForma_Click(object sender, EventArgs e)
+        {
+            SmerForma smer = new SmerForma();
+            smer.ShowDialog();
+        }
+
+        private void btnUceniciForma_Click(object sender, EventArgs e)
+        {
+            UceniciForma uceniciForma = new UceniciForma();
+            uceniciForma.ShowDialog();
         }
     }
 }
