@@ -981,6 +981,52 @@ namespace SkolaProjekat
                 Console.WriteLine("Greška prilikom dodavanja nastavnika sa punom normom: " + nastavnik.JMBG +"; \nGreska:"+ ec.Message);
             }
         }
+        public static void dodajNastavnoOsobljeSaDelomNorme(NastavnoOsobljeSaDelomNormeBasic nastavnik)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                NastavnoOsobljeSaDelomCasova n = new NastavnoOsobljeSaDelomCasova();
+                n.JMBG = nastavnik.JMBG;
+                n.Ime = nastavnik.Ime;
+                n.Prezime = nastavnik.Prezime;
+                n.ImeRoditelja = nastavnik.ImeRoditelja;
+                n.AdresaStanovanja = nastavnik.AdresaStanovanja;
+                n.BrojCasovaNedeljno = nastavnik.BrojCasovaNedeljno;
+                n.NazivOstalihSkola = nastavnik.NazivOstalihSkola;
+
+                s.SaveOrUpdate(n);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja nastavnika sa delom norme: " + nastavnik.JMBG + "; \nGreska:" + ec.Message);
+            }
+        }
+        public static void dodajNenastavnoOsoblje(NenastavnoOsobljeBasic zaposleni)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                NenastavnoOsoblje n = new NenastavnoOsoblje();
+                n.JMBG = zaposleni.JMBG;
+                n.Ime = zaposleni.Ime;
+                n.Prezime = zaposleni.Prezime;
+                n.ImeRoditelja = zaposleni.ImeRoditelja;
+                n.AdresaStanovanja = zaposleni.AdresaStanovanja;
+                n.ImeSektora = zaposleni.ImeSektora;
+                n.StrucnaSprema = zaposleni.StrucnaSprema;
+
+                s.SaveOrUpdate(n);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja zaposlenog(nenastavno osoblje) : " + zaposleni.JMBG + "; \nGreska:" + ec.Message);
+            }
+        }
         public static void obrisiNastavnoOsobljeSaPunomNormom(string JMBG)
         {
             try
@@ -997,14 +1043,126 @@ namespace SkolaProjekat
                 Console.WriteLine("Greška prilikom brisanja nastavnika sa punom normom: " + JMBG + "; \nGreska:" + ec.Message);
             }
         }
+        public static void obrisiNastavnoOsobljeDelomNorme(string JMBG)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                NastavnoOsobljeSaDelomCasova n = s.Load<NastavnoOsobljeSaDelomCasova>(JMBG);
 
+                s.Delete(n);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom brisanja nastavnika sa delom norme: " + JMBG + "; \nGreska:" + ec.Message);
+            }
+        }
+        public static void obrisiNenastavnoOsoblje(string JMBG)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                NenastavnoOsoblje n = s.Load<NenastavnoOsoblje>(JMBG);
+
+                s.Delete(n);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom brisanja  zaposlenog (nenastavno osoblje): " + JMBG + "; \nGreska:" + ec.Message);
+            }
+        }
         #endregion
 
         #region AngazovanSaPunomNormom
-        
+        public static void dodajAngazovanjeSaPunomNormom(AngazovanSaPunomNormomBasic angazovan)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                AngazovanSaPunomNormom a = new AngazovanSaPunomNormom();
+                a.Id = new AngazovanSaPunomNormomId();
+                a.Id.NastavnikSaPunomNormomAngazovan = s.Load<OsobljeSaPunomNormom>(angazovan.Id.NastavnikSaPunomNormomAngazovan);
+                a.Id.PredmetNaKomeAngazovanNastavnikSaPunomNormom = s.Load<Predmet>(angazovan.Id.PredmetNaKomeAngazovanNastavnikSaPunomNormom);
+                a.DatumAngazovanja = angazovan.DatumAngazovanja;
+                s.SaveOrUpdate(a);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja angazovanja sa punom normom " + ec.Message);
+            }
+        }
+        public static void obrisiAngazovanjeSaPunomNormom(string nazivPredmeta, string jmbg)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                AngazovanSaPunomNormom a = new AngazovanSaPunomNormom();
+                AngazovanSaPunomNormomId aId = new AngazovanSaPunomNormomId();
+                aId.NastavnikSaPunomNormomAngazovan = s.Load<OsobljeSaPunomNormom>(jmbg);
+                aId.PredmetNaKomeAngazovanNastavnikSaPunomNormom = s.Load<Predmet>(nazivPredmeta);
+                a = s.Load<AngazovanSaPunomNormom>(aId);
+
+                s.Delete(a);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom brisanja angazovanja sa punom normom " + ec.Message);
+            }
+
+        }
+
         #endregion
 
         #region AngazovanSaDelomNorme
+
+        public static void dodajAngazovanjeSaDelomNorme(AngazovanSaDelomNormeBasic angazovan)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                AngazovanSaDelomNorme a = new AngazovanSaDelomNorme();
+                a.Id = new AngazovanSaDelomNormeId();
+                a.Id.NastavnikSaDelomCasovaAngazovan = s.Load<NastavnoOsobljeSaDelomCasova>(angazovan.Id.NastavnikSaDelomCasovaAngazovan);
+                a.Id.PredmetNaKomeAngazovanNastavnikSaDelomCasova = s.Load<Predmet>(angazovan.Id.PredmetNaKomeAngazovanNastavnikSaDelomCasova);
+                a.DatumAngazovanja = angazovan.DatumAngazovanja;
+                s.SaveOrUpdate(a);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja angazovanja sa delom norme " + ec.Message);
+            }
+        }
+        public static void obrisiAngazovanjeSaDelomNorme(string nazivPredmeta, string jmbg)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                AngazovanSaDelomNorme a = new AngazovanSaDelomNorme();
+                AngazovanSaDelomNormeId aId = new AngazovanSaDelomNormeId();
+                aId.NastavnikSaDelomCasovaAngazovan = s.Load<NastavnoOsobljeSaDelomCasova>(jmbg);
+                aId.PredmetNaKomeAngazovanNastavnikSaDelomCasova = s.Load<Predmet>(nazivPredmeta);
+                a = s.Load<AngazovanSaDelomNorme>(aId);
+
+                s.Delete(a);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom brisanja angazovanja sa delom norme " + ec.Message);
+            }
+
+        }
         #endregion
     }
 }
