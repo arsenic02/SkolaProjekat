@@ -27,7 +27,7 @@ namespace SkolaProjekat.Forme
 
             foreach (NenastavnoOsobljePregled n in podaci)
             {
-                ListViewItem item = new ListViewItem(new string[] { n.JMBG, n.Ime, n.ImeRoditelja, n.Prezime, n.AdresaStanovanja,n.StrucnaSprema,n.ImeSektora});
+                ListViewItem item = new ListViewItem(new string[] { n.JMBG, n.Ime, n.ImeRoditelja, n.Prezime, n.AdresaStanovanja, n.StrucnaSprema, n.ImeSektora });
                 listaZaposlenih.Items.Add(item);
             }
         }
@@ -77,6 +77,12 @@ namespace SkolaProjekat.Forme
             {
 
             }
+        }
+
+        private void NenastavnoOsobljeForma_Load_1(object sender, EventArgs e)
+        {
+            ListViewItem item = new ListViewItem(new string[] {"1234567891234", "Petar", "Nikola", "Sofornijevic","Sokobanja, Svetozara Markovica 10/7","Domar","Ljudski resursi" });
+            listaZaposlenih.Items.Add(item);
         }
     }
 }

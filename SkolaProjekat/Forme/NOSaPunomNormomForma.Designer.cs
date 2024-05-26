@@ -47,38 +47,45 @@
             listaZaposlenih.GridLines = true;
             listaZaposlenih.Location = new Point(12, 12);
             listaZaposlenih.Name = "listaZaposlenih";
-            listaZaposlenih.Size = new Size(489, 393);
+            listaZaposlenih.Size = new Size(636, 333);
             listaZaposlenih.TabIndex = 0;
             listaZaposlenih.UseCompatibleStateImageBehavior = false;
+            listaZaposlenih.View = View.Details;
             listaZaposlenih.SelectedIndexChanged += listaZaposlenih_SelectedIndexChanged;
             // 
             // columnHeader1
             // 
             columnHeader1.Text = "JMBG";
+            columnHeader1.Width = 100;
             // 
             // columnHeader2
             // 
             columnHeader2.Text = "Ime";
+            columnHeader2.Width = 70;
             // 
             // columnHeader3
             // 
             columnHeader3.Text = "Ime Roditelja";
+            columnHeader3.Width = 90;
             // 
             // columnHeader4
             // 
             columnHeader4.Text = "Prezime";
+            columnHeader4.Width = 90;
             // 
             // columnHeader5
             // 
             columnHeader5.Text = "Adresa stanovanja";
+            columnHeader5.Width = 200;
             // 
             // columnHeader6
             // 
             columnHeader6.Text = "Broj casova";
+            columnHeader6.Width = 80;
             // 
             // btnDodajZaposlenog
             // 
-            btnDodajZaposlenog.Location = new Point(526, 34);
+            btnDodajZaposlenog.Location = new Point(12, 351);
             btnDodajZaposlenog.Name = "btnDodajZaposlenog";
             btnDodajZaposlenog.Size = new Size(102, 35);
             btnDodajZaposlenog.TabIndex = 1;
@@ -88,7 +95,7 @@
             // 
             // btnAzuriraj
             // 
-            btnAzuriraj.Location = new Point(526, 75);
+            btnAzuriraj.Location = new Point(120, 351);
             btnAzuriraj.Name = "btnAzuriraj";
             btnAzuriraj.Size = new Size(102, 35);
             btnAzuriraj.TabIndex = 2;
@@ -98,7 +105,7 @@
             // 
             // btnObrisi
             // 
-            btnObrisi.Location = new Point(526, 116);
+            btnObrisi.Location = new Point(546, 352);
             btnObrisi.Name = "btnObrisi";
             btnObrisi.Size = new Size(102, 34);
             btnObrisi.TabIndex = 3;
@@ -110,11 +117,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(658, 450);
+            ClientSize = new Size(660, 424);
             Controls.Add(btnObrisi);
             Controls.Add(btnAzuriraj);
             Controls.Add(btnDodajZaposlenog);
             Controls.Add(listaZaposlenih);
+            MaximumSize = new Size(676, 463);
+            MinimumSize = new Size(676, 463);
             Name = "NOSaPunomNormomForma";
             Text = "NOSaPunomNormomForma";
             Load += NOSaPunomNormomForma_Load_1;

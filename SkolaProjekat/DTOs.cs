@@ -75,10 +75,9 @@ namespace SkolaProjekat
 
     #region Smer
     public class SmerBasic 
-    {
-        public  int Id { get; protected set; }
-        public   string NazivSmera { get; set; }
-        public  string MaksimalanBrojUcenika { get; set; }
+    {      
+        public  string NazivSmera { get; set; }
+        public  int MaksimalanBrojUcenika { get; set; }
         public  IList<UcenikBasic> Ucenici { get; set; } = [];//new List<Ucenik>(); //[];
         public  IList<PredmetBasic> Predmeti { get; set; }//Posledica veze Ima N-M
 
@@ -87,9 +86,8 @@ namespace SkolaProjekat
             Ucenici = new List<UcenikBasic>();
             Predmeti = new List<PredmetBasic>();
         }
-        public SmerBasic(int id, string nazivSmera, string maxBrUcenika)
+        public SmerBasic(string nazivSmera, int maxBrUcenika)
         {
-            Id = id;
             NazivSmera = nazivSmera;
             MaksimalanBrojUcenika = maxBrUcenika;
 
@@ -99,17 +97,16 @@ namespace SkolaProjekat
     }
     public class SmerPregled
     {
-        public  int Id { get; protected set; }
-        public   string NazivSmera { get; set; }
-        public  string MaksimalanBrojUcenika { get; set; }
+        public string NazivSmera { get; set; }
+        public int MaksimalanBrojUcenika { get; set; }
 
         public SmerPregled()
         {
 
         }
 
-        public SmerPregled(string nazivSmera, string maxBrUcenika)
-        {           
+        public SmerPregled(string nazivSmera, int maxBrUcenika)
+        {
             NazivSmera = nazivSmera;
             MaksimalanBrojUcenika = maxBrUcenika;
         }

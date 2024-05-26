@@ -9,9 +9,8 @@ namespace ProjekatSkola.Entiteti
 {
     public class Smer
     {
-        public virtual int Id { get; protected set; }
         public virtual string NazivSmera { get; set; }
-        public virtual string MaksimalanBrojUcenika { get; set; }
+        public virtual int MaksimalanBrojUcenika { get; set; }
         public virtual IList<Ucenik> Ucenici { get; set; }//new List<Ucenik>(); //[];
         public virtual IList<Predmet> Predmeti { get; set; }//Posledica veze Ima N-M
 

@@ -201,6 +201,7 @@
             Controls.Add(groupBox1);
             Name = "NenastavnoOsobljeDodajForma";
             Text = "NenastavnoOsobljeDodajForma";
+            Load += NenastavnoOsobljeDodajForma_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

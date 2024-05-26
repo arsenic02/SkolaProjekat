@@ -178,7 +178,7 @@ namespace SkolaProjekat
                     Smer s = new()
                     {
                         NazivSmera = "Arhitektura",
-                        MaksimalanBrojUcenika = "100"
+                        MaksimalanBrojUcenika = 100
                     };
 
                     Ucenik u = new()
@@ -284,7 +284,7 @@ namespace SkolaProjekat
                     Smer smer = new()
                     {
                         NazivSmera = "Medicinski tehnicar",
-                        MaksimalanBrojUcenika = "30"
+                        MaksimalanBrojUcenika = 30
                     };
 
                     Predmet predmet = new()

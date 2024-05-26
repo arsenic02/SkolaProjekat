@@ -119,7 +119,7 @@ namespace SkolaProjekat
                 ProjekatSkola.Entiteti.Smer smer = s.Load<ProjekatSkola.Entiteti.Smer>(o.JeUpisan.NazivSmera);
 
                 RazredBasic razredBasic = new RazredBasic(o.PohadjaRazred.RedniBrojRazreda);
-                SmerBasic smerBasic = new SmerBasic(o.JeUpisan.Id, o.JeUpisan.NazivSmera, o.JeUpisan.MaksimalanBrojUcenika);
+                SmerBasic smerBasic = new SmerBasic(o.JeUpisan.NazivSmera, o.JeUpisan.MaksimalanBrojUcenika);
                 ub = new UcenikBasic(o.JedinstveniUpisniBroj, o.Ime, o.Prezime, o.AdresaStanovanja, o.DatumUpisa, razredBasic, smerBasic);
 
                 s.Close();
@@ -207,12 +207,12 @@ namespace SkolaProjekat
                 Console.WriteLine("Greška prilikom dodavanja smera: " + smer.NazivSmera + ";\n Greska:" + ec.Message);
             }
         }
-        public static void obrisiSmer(SmerBasic smer)
+        public static void obrisiSmer(string nazivSmera)
         {
             try
             {
                 ISession s = DataLayer.GetSession();
-                Smer sm = s.Load<Smer>(smer.Id);
+                Smer sm = s.Load<Smer>(nazivSmera);
 
                 s.Delete(sm);
                 s.Flush();
@@ -220,7 +220,7 @@ namespace SkolaProjekat
             }
             catch (Exception ec)
             {
-                Console.WriteLine("Greška prilikom brisanja smera: " + smer.NazivSmera + ";\n Greska:" + ec.Message);
+                Console.WriteLine("Greška prilikom brisanja smera: " + nazivSmera + ";\n Greska:" + ec.Message);
             }
         }
         public static void azurirajSmer(SmerBasic smer)

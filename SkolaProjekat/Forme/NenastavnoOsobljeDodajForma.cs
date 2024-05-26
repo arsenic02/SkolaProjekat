@@ -25,7 +25,7 @@ namespace SkolaProjekat.Forme
             string title = "Pitanje";
             MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
             DialogResult result = MessageBox.Show(poruka, title, buttons);
-            
+
             if (result == DialogResult.OK)
             {
                 this.zaposleni.Ime = tbIme.Text;
@@ -43,6 +43,11 @@ namespace SkolaProjekat.Forme
             {
 
             }
+        }
+
+        private void NenastavnoOsobljeDodajForma_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
