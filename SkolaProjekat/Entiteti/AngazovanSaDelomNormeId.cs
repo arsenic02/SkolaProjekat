@@ -9,8 +9,8 @@ namespace SkolaProjekat.Entiteti
 {
     public class AngazovanSaDelomNormeId
     {
-        public virtual required NastavnoOsobljeSaDelomCasova NastavnikSaDelomCasovaAngazovan { get; set; }
-        public virtual required Predmet PredmetNaKomeAngazovanNastavnikSaDelomCasova { get; set; }
+        public virtual NastavnoOsobljeSaDelomCasova NastavnikSaDelomCasovaAngazovan { get; set; }
+        public virtual Predmet PredmetNaKomeAngazovanNastavnikSaDelomCasova { get; set; }
 
         public override bool Equals(object? obj)
         {

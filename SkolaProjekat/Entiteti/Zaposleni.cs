@@ -8,7 +8,7 @@ namespace SkolaProjekat.Entiteti
 {
     public abstract class Zaposleni
     {
-        public virtual required string JMBG { get; set; }
+        public virtual string JMBG { get; set; }
         public virtual string Ime { get; set; }
         public virtual string Prezime { get; set; }
         public virtual string ImeRoditelja { get; set; }

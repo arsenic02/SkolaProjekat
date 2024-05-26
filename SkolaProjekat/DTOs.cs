@@ -108,9 +108,8 @@ namespace SkolaProjekat
 
         }
 
-        public SmerPregled(int id, string nazivSmera, string maxBrUcenika)
-        {
-            Id = id;
+        public SmerPregled(string nazivSmera, string maxBrUcenika)
+        {           
             NazivSmera = nazivSmera;
             MaksimalanBrojUcenika = maxBrUcenika;
         }
@@ -196,7 +195,6 @@ namespace SkolaProjekat
     {
         public  string NazivPredmeta { get; set; }
         public  string TipPredmeta { get; set; }
-        public  int JedinstveniBrojUcenika { get; set; }
         public  string NazivSmera { get; set; }
 
         public  IList<AngazovanSaDelomNormeBasic> PredmeteKojePredajeNastavnikSaDelomCasova { get; set; }
@@ -204,7 +202,6 @@ namespace SkolaProjekat
         public  IList<SmerBasic> Smerovi { get; set; } //Posledica veze Ima N-M 
         public  IList<OcenaBasic> Ocene { get; set; } //[];
         public  IList<RazredBasic> Na { get; set; }
-        public  UcenikBasic SlusaPredmet { get; set; }
         public PredmetBasic()
         {
             PredmeteKojePredajeNastavnikSaDelomCasova = new List<AngazovanSaDelomNormeBasic>();
@@ -213,7 +210,7 @@ namespace SkolaProjekat
             Ocene = new List<OcenaBasic>();
             Na = new List<RazredBasic>();
         }
-        public PredmetBasic(string nazivPredmeta, string tip, int JBU, string nazivSmera, UcenikBasic ucenik)
+        public PredmetBasic(string nazivPredmeta, string tip, string nazivSmera)
         {
             PredmeteKojePredajeNastavnikSaDelomCasova = new List<AngazovanSaDelomNormeBasic>();
             PredmeteKojePredajeNastavnikSaPunomNormomCasova = new List<AngazovanSaPunomNormomBasic>();
@@ -223,9 +220,7 @@ namespace SkolaProjekat
 
             NazivPredmeta = nazivPredmeta;
             TipPredmeta = tip;
-            JedinstveniBrojUcenika = JBU;
             NazivSmera = nazivSmera;
-            SlusaPredmet = ucenik;
         }
     }
 
@@ -234,7 +229,7 @@ namespace SkolaProjekat
         public OpsteobrazovniPredmetBasic()
         { }
 
-        public OpsteobrazovniPredmetBasic(string nazivPredmeta, string tip, int JBU, string nazivSmera, UcenikBasic ucenik) : base(nazivPredmeta, tip, JBU, nazivSmera,ucenik)
+        public OpsteobrazovniPredmetBasic(string nazivPredmeta, string tip, int JBU, string nazivSmera, UcenikBasic ucenik) : base(nazivPredmeta, tip,nazivSmera)
         {
 
         }
@@ -245,7 +240,7 @@ namespace SkolaProjekat
         public StrucniPredmetBasic()
         { }
 
-        public StrucniPredmetBasic(string nazivPredmeta, string tip, int JBU, string nazivSmera, UcenikBasic ucenik) : base(nazivPredmeta, tip, JBU, nazivSmera, ucenik)
+        public StrucniPredmetBasic(string nazivPredmeta, string tip, int JBU, string nazivSmera, UcenikBasic ucenik) : base(nazivPredmeta, tip, nazivSmera)
         {
 
         }
@@ -255,20 +250,16 @@ namespace SkolaProjekat
     {
         public  string NazivPredmeta { get; set; }
         public  string TipPredmeta { get; set; }
-        public  int JedinstveniBrojUcenika { get; set; }
         public  string NazivSmera { get; set; }      
-        public  Ucenik SlusaPredmet { get; set; }
         public PredmetPregled()
         {
            
         }
-        public PredmetPregled(string nazivPredmeta, string tip, int JBU, string nazivSmera, Ucenik ucenik)
+        public PredmetPregled(string nazivPredmeta, string tip, string nazivSmera)
         {
             NazivPredmeta = nazivPredmeta;
             TipPredmeta = tip;
-            JedinstveniBrojUcenika = JBU;
             NazivSmera = nazivSmera;
-            SlusaPredmet = ucenik;
         }      
     }
 
@@ -277,7 +268,7 @@ namespace SkolaProjekat
         public OpsteobrazovniPredmetPregled()
         { }
 
-        public OpsteobrazovniPredmetPregled(string nazivPredmeta, string tip, int JBU, string nazivSmera, Ucenik ucenik) : base(nazivPredmeta, tip, JBU, nazivSmera, ucenik)
+        public OpsteobrazovniPredmetPregled(string nazivPredmeta, string tip, string nazivSmera) : base(nazivPredmeta, tip, nazivSmera)
         {
 
         }
@@ -288,7 +279,7 @@ namespace SkolaProjekat
         public StrucniPredmetPregled()
         { }
 
-        public StrucniPredmetPregled(string nazivPredmeta, string tip, int JBU, string nazivSmera, Ucenik ucenik) : base(nazivPredmeta, tip, JBU, nazivSmera, ucenik)
+        public StrucniPredmetPregled(string nazivPredmeta, string tip, string nazivSmera) : base(nazivPredmeta, tip, nazivSmera)
         {
 
         }

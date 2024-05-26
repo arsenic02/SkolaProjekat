@@ -1,5 +1,8 @@
-﻿using NHibernate;
+﻿using FluentNHibernate.Testing.Values;
+using NHibernate;
+using NHibernate.Criterion;
 using ProjekatSkola.Entiteti;
+using SkolaProjekat.Entiteti;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +13,19 @@ namespace SkolaProjekat
 {
     public class DTOManager
     {
+
+        /*
+          try
+            {
+                ISession s = DataLayer.GetSession();
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dohvatanja Strucnog predmeta: " + ec.Message);
+            }
+         */
         #region Ucenik
         public static List<UcenikPregled> vratiSveUcenike()
         {
@@ -19,7 +35,7 @@ namespace SkolaProjekat
                 ISession s = DataLayer.GetSession();
 
                 IEnumerable<ProjekatSkola.Entiteti.Ucenik> sviUcenici = from o in s.Query<ProjekatSkola.Entiteti.Ucenik>()
-                                                                 select o;
+                                                                        select o;
 
                 foreach (ProjekatSkola.Entiteti.Ucenik u in sviUcenici)
                 {
@@ -35,7 +51,6 @@ namespace SkolaProjekat
 
             return ucenici;
         }
-
         public static void dodajUcenika(UcenikBasic u)
         {
             try
@@ -54,7 +69,7 @@ namespace SkolaProjekat
                 o.PohadjaRazred = razred;
                 ProjekatSkola.Entiteti.Smer smer = s.Load<ProjekatSkola.Entiteti.Smer>(u.JeUpisan.NazivSmera);
                 o.JeUpisan = smer;
-              
+
                 s.SaveOrUpdate(o);
 
                 s.Flush();
@@ -65,7 +80,6 @@ namespace SkolaProjekat
                 // handle exceptions
             }
         }
-
         public static UcenikBasic azurirajUcenika(UcenikBasic u)
         {
             try
@@ -93,7 +107,6 @@ namespace SkolaProjekat
 
             return u;
         }
-
         public static UcenikBasic vratiUcenika(string jbu)
         {
             UcenikBasic ub = new UcenikBasic();
@@ -118,7 +131,6 @@ namespace SkolaProjekat
 
             return ub;
         }
-
         public static void obrisiUcenika(string jbu)
         {
             try
@@ -140,15 +152,505 @@ namespace SkolaProjekat
 
 
         #region Smer
+        public static SmerBasic vratiSmer(string nazivSmera)
+        {
+            SmerBasic smer = new SmerBasic();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                Smer sm = s.Load<Smer>(nazivSmera);
+                smer.NazivSmera = sm.NazivSmera;
+                smer.MaksimalanBrojUcenika = sm.MaksimalanBrojUcenika;
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja smera: " + nazivSmera + ";\n Greska:" + ec.Message);
+            }
+            return smer;
+        }
+        public static List<SmerPregled> vratiSveSmerove()
+        {
+            List<SmerPregled> smerovi = new List<SmerPregled>();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                IList<Smer> sviSmerovi = s.Query<Smer>().ToList();
+
+                // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
+                foreach (Smer sm in sviSmerovi)
+                {
+                    smerovi.Add(new SmerPregled(sm.NazivSmera, sm.MaksimalanBrojUcenika));
+                }
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja svih smerova: " + ec.Message);
+            }
+            return smerovi;
+        }
+        public static void dodajSmer(SmerBasic smer)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Smer sm = new Smer();
+                sm.NazivSmera = sm.NazivSmera;
+                sm.MaksimalanBrojUcenika = sm.MaksimalanBrojUcenika;
+                s.SaveOrUpdate(sm);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja smera: " + smer.NazivSmera + ";\n Greska:" + ec.Message);
+            }
+        }
+        public static void obrisiSmer(SmerBasic smer)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                Smer sm = s.Load<Smer>(smer.Id);
+
+                s.Delete(sm);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom brisanja smera: " + smer.NazivSmera + ";\n Greska:" + ec.Message);
+            }
+        }
         #endregion
 
         #region RoditeljskoVece
+        public static RoditeljskoVeceBasic vratiRoditelja(string JMBG)
+        {
+            RoditeljskoVeceBasic vece = new RoditeljskoVeceBasic();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                RoditeljskoVece rv = s.Load<RoditeljskoVece>(JMBG);
+                vece.JMBG = rv.JMBG;
+                vece.ImeRoditelja = rv.ImeRoditelja;
+                vece.PrezimeRoditelja = rv.PrezimeRoditelja;
+                vece.Telefon = rv.Telefon;
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja roditelja: " + JMBG + ";\n Greska:" + ec.Message);
+            }
+            return vece;
+        }
+        public static List<RoditeljskoVecePregled> vratiCeloRoditeljskoVece()
+        {
+            List<RoditeljskoVecePregled> roditelji = new List<RoditeljskoVecePregled>();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                IList<RoditeljskoVece> sviRoditelji = s.Query<RoditeljskoVece>().ToList();
+
+                // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
+                foreach (RoditeljskoVece rv in sviRoditelji)
+                {
+                    roditelji.Add(new RoditeljskoVecePregled(rv.JMBG, rv.ImeRoditelja, rv.PrezimeRoditelja, rv.Telefon));
+                }
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja svih roditelja: " + ec.Message);
+            }
+            return roditelji;
+        }
+        public static void dodajRoditelja(RoditeljskoVeceBasic roditelj)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                RoditeljskoVece novRoditelj = new RoditeljskoVece
+                {
+                    JMBG = roditelj.JMBG,
+                    ImeRoditelja = roditelj.ImeRoditelja,
+                    PrezimeRoditelja = roditelj.PrezimeRoditelja,
+                    Telefon = roditelj.Telefon
+                };
+                s.SaveOrUpdate(novRoditelj);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja roditelja: " + roditelj.JMBG + ";\n Greska:" + ec.Message);
+            }
+        }
+        public static void obrisiRoditelja(RoditeljskoVece roditelj)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                RoditeljskoVece r = s.Load<RoditeljskoVece>(roditelj.JMBG);
+                s.Delete(r);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom brisanja roditelja: " + roditelj.JMBG + ";\n Greska:" + ec.Message);
+            }
+        }
         #endregion
 
         #region Razred
+        public static RazredBasic vratiRazred(int redniBrojRazreda)
+        {
+            RazredBasic razred = new RazredBasic();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                Razred rv = s.Load<Razred>(redniBrojRazreda);
+                razred.RedniBrojRazreda = rv.RedniBrojRazreda;
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja razreda: " + redniBrojRazreda + ";\n Greska:" + ec.Message);
+            }
+            return razred;
+
+        }
+        public static List<RazredPregled> vratiSveRazrede()
+        {
+            List<RazredPregled> razredi = new List<RazredPregled>();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                IList<Razred> sviRazredi = s.Query<Razred>().ToList();
+
+                // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
+                foreach (Razred rv in sviRazredi)
+                {
+                    razredi.Add(new RazredPregled(rv.RedniBrojRazreda));
+                }
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja svih razreda: " + ec.Message);
+            }
+            return razredi;
+        }
+        public static void dodajRazred(RazredBasic razred)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                Razred r = new Razred
+                {
+                    RedniBrojRazreda = razred.RedniBrojRazreda
+                };
+                s.SaveOrUpdate(r);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja razreda: " + razred.RedniBrojRazreda + ";\n Greska:" + ec.Message);
+            }
+        }
+        public static void obrisiRazred(Razred razred)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Razred o = s.Load<Razred>(razred.RedniBrojRazreda);
+                s.Delete(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom brisanja razreda: " + razred.RedniBrojRazreda + ";\n Greska:" + ec.Message);
+            }
+        }
         #endregion
 
         #region Predmet
+        public static List<PredmetPregled> vratiSvePredmete()
+        {
+            List<PredmetPregled> sviPredmetiPregled = new List<PredmetPregled>();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    // Dohvata sve predmete iz baze podataka
+                    IList<Predmet> sviPredmeti = s.Query<Predmet>().ToList();
+
+                    // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
+                    foreach (Predmet predmet in sviPredmeti)
+                    {
+                        sviPredmetiPregled.Add(new PredmetPregled(predmet.NazivPredmeta,predmet.TipPredmeta,predmet.NazivSmera));
+                    }
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom dohvatanja svih predmeta: " + ec.Message);
+            }
+            return sviPredmetiPregled;
+        }
+        public static List<StrucniPredmetPregled> vratiSveStrucnePredmete() 
+        {
+            List<StrucniPredmetPregled> sviPredmetiPregled = new List<StrucniPredmetPregled>();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    // Dohvata sve predmete iz baze podataka
+                    IEnumerable<StrucniPredmet> sviPredmeti = s.Query<StrucniPredmet>().ToList();
+
+                    // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
+                    foreach (StrucniPredmet predmet in sviPredmeti)
+                    {
+                        sviPredmetiPregled.Add(new StrucniPredmetPregled(predmet.NazivPredmeta, predmet.TipPredmeta, predmet.NazivSmera));
+                    }
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom pribavljanja svih strucnih predmeta: " + ec.Message);
+            }
+            return sviPredmetiPregled;
+        }
+        public static List<OpsteobrazovniPredmetPregled> vratiSveOpsteobrazovnePredmete() 
+        {
+            List<OpsteobrazovniPredmetPregled> sviPredmetiPregled = new List<OpsteobrazovniPredmetPregled>();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    // Dohvata sve predmete iz baze podataka
+                    IEnumerable<OpsteobrazovniPredmet> sviPredmeti = s.Query<OpsteobrazovniPredmet>().ToList();
+
+                    // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
+                    foreach (OpsteobrazovniPredmet predmet in sviPredmeti)
+                    {
+                        sviPredmetiPregled.Add(new OpsteobrazovniPredmetPregled(predmet.NazivPredmeta, predmet.TipPredmeta, predmet.NazivSmera));
+                    }
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom pribavljanja svih opsteobrazovnih predmeta: " + ec.Message);
+            }
+            return sviPredmetiPregled;
+        }
+        public static OpsteobrazovniPredmetBasic vrtatiOpsteobrazovniPredmet(string naziv)
+        {
+            OpsteobrazovniPredmetBasic oop = new OpsteobrazovniPredmetBasic();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                OpsteobrazovniPredmet p = s.Load<OpsteobrazovniPredmet>(naziv);
+                oop.NazivPredmeta = p.NazivPredmeta;
+                oop.NazivSmera = p.NazivSmera;
+                oop.TipPredmeta = p.TipPredmeta;
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dohvatanja opsteobrazovnog predmeta: "+naziv +";\n Greska:"+ ec.Message);
+            }
+            return oop;
+        }     
+        public static StrucniPredmetBasic vratiStrucniPredmet(string naziv)
+        {
+            StrucniPredmetBasic oop = new StrucniPredmetBasic();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                StrucniPredmet p = s.Load<StrucniPredmet>(naziv);
+                oop.NazivPredmeta = p.NazivPredmeta;
+                oop.NazivSmera = p.NazivSmera;
+                oop.TipPredmeta = p.TipPredmeta;
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dohvatanja strucnog predmeta: " + naziv + ";\n Greska:" + ec.Message);
+            }
+            return oop;
+        }
+        public static PredmetBasic vratiPredmet(string naziv)
+        {
+            PredmetBasic oop = new PredmetBasic();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Predmet p = s.Load<Predmet>(naziv);
+                oop.NazivPredmeta = p.NazivPredmeta;
+                oop.NazivSmera = p.NazivSmera;
+                oop.TipPredmeta = p.TipPredmeta;
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dohvatanja predmeta: " + naziv + ";\n Greska:" + ec.Message);
+            }
+            return oop;
+        }
+        public static void dodajPredmet(PredmetBasic p)
+        {
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {                  
+                    Predmet noviPredmet = new Predmet
+                    {
+                        NazivPredmeta = p.NazivPredmeta,
+                        TipPredmeta = p.TipPredmeta,
+                        NazivSmera = p.NazivSmera
+                    };
+                    s.SaveOrUpdate(noviPredmet);
+                    s.Flush();
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja predmeta: " + ec.Message);
+            }
+        }
+        public static void dodajStrucniPredmet(StrucniPredmetBasic STR)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                StrucniPredmet sp = new StrucniPredmet();
+                sp.NazivPredmeta = STR.NazivPredmeta;
+                sp.TipPredmeta = STR.TipPredmeta;
+                sp.NazivSmera = STR.NazivSmera;
+
+                s.Save(sp);
+
+                s.Flush();
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja Strucnog predmeta: " + ec.Message);
+            }
+
+        }
+        public static void dodajOpsteobrazovniPredmet(OpsteobrazovniPredmetBasic OOP)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                OpsteobrazovniPredmet sp = new OpsteobrazovniPredmet();
+                sp.NazivPredmeta = OOP.NazivPredmeta;
+                sp.TipPredmeta = OOP.TipPredmeta;
+                sp.NazivSmera = OOP.NazivSmera;
+
+                s.Save(sp);
+
+                s.Flush();
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja opsteobrazovnog predmeta: " + ec.Message);
+            }
+        }
+        public static void obrisiPredmet(string nazivPredmeta)
+        {
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    Predmet p = s.Load<Predmet>(nazivPredmeta);
+                    s.Delete(p);
+                    s.Flush();
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom brisanja predmeta: " + ec.Message);
+            }
+        }
+        public static void azurirajPredmet(PredmetBasic predmet) 
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                Predmet o = s.Load<Predmet>(predmet.NazivPredmeta);
+                o.NazivPredmeta = predmet.NazivPredmeta;
+                o.TipPredmeta = predmet.TipPredmeta;
+                o.NazivSmera = predmet.NazivSmera;
+
+                s.SaveOrUpdate(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom azuriranja predmeta: " + predmet.NazivPredmeta + ";\n Greska: " + ec.Message);
+            }
+        }
+        public static void azurirajOpsteobrazovniPredmet(OpsteobrazovniPredmetBasic OOP)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                OpsteobrazovniPredmet o = s.Load<OpsteobrazovniPredmet>(OOP.NazivPredmeta);
+                o.NazivPredmeta = OOP.NazivPredmeta;
+                o.TipPredmeta = OOP.TipPredmeta;
+                o.NazivSmera = OOP.NazivSmera;
+
+                s.SaveOrUpdate(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom azuriranja opsteobrazovnog predmeta: " + OOP.NazivPredmeta +";\n Greska: "+ ec.Message);
+            }
+        }
+        public static void azurirajStrucniPredmet(StrucniPredmetBasic STR)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                StrucniPredmet o = s.Load<StrucniPredmet>(STR.NazivPredmeta);
+                o.NazivPredmeta = STR.NazivPredmeta;
+                o.TipPredmeta = STR.TipPredmeta;
+                o.NazivSmera = STR.NazivSmera;
+
+                s.SaveOrUpdate(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom azuriranja strucnog predmeta predmeta: " + STR.NazivPredmeta + ";\n Greska: " + ec.Message);
+            }
+        }
         #endregion
 
         #region Ocena
@@ -191,6 +693,50 @@ namespace SkolaProjekat
             }
             catch (Exception ec) { }
             return ocenePredmetaPregled;
+        }
+        public static List<OcenaPregled> vratiSveOcene()
+        {
+            List<OcenaPregled> sveOcenePregled = new List<OcenaPregled>();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    // Dohvata sve ocene iz baze podataka
+                    IList<Ocena> sveOcene = s.Query<Ocena>().ToList();
+
+                    // Pretvara svaku Ocenu u OcenaPregled objekat i dodaje u listu
+                    foreach (Ocena ocena in sveOcene)
+                    {
+                        sveOcenePregled.Add(new OcenaPregled(ocena.NazivPredmeta, ocena.JedinstveniBrojUcenika, ocena.DatumDobijanjaOcene, ocena.NumerickaVrednost, ocena.TekstualniOpis));
+                    }
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom dohvatanja svih ocena: " + ec.Message);
+            }
+            return sveOcenePregled;
+        }
+        public static OcenaBasic vratiOcenu(int id)
+        {
+            OcenaBasic ob = new OcenaBasic();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    Ocena o = s.Load<Ocena>(id);
+                    ob = new OcenaBasic(o.NazivPredmeta, o.JedinstveniBrojUcenika, o.DatumDobijanjaOcene, o.NumerickaVrednost, o.TekstualniOpis);
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom dohvatanja ocene: "+ id + ec.Message);
+            }
+            return ob;
         }
         public static OcenaBasic azurirajOcenu(OcenaBasic o)
         {
@@ -278,9 +824,184 @@ namespace SkolaProjekat
         #endregion
 
         #region Osoblje
+        public static NastavnoOsobljeSaPunomNormomBasic vratiNastavnikaSaPunomNormom(string jmbg)
+        {
+            NastavnoOsobljeSaPunomNormomBasic nastavnik = new NastavnoOsobljeSaPunomNormomBasic();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    OsobljeSaPunomNormom osoba = s.Load<OsobljeSaPunomNormom>(jmbg);
+                    nastavnik = new NastavnoOsobljeSaPunomNormomBasic(osoba.JMBG, osoba.Ime, osoba.Prezime, osoba.ImeRoditelja, osoba.AdresaStanovanja, osoba.BrojCasova);
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom dohvatanja nastavnika sa punom normom: " + jmbg + ec.Message);
+            }
+            return nastavnik;
+
+        }
+        public static NastavnoOsobljeSaDelomNormeBasic vratiNastavnikaSaDelomNorme(string jmbg)
+        {
+            NastavnoOsobljeSaDelomNormeBasic nastavnik = new NastavnoOsobljeSaDelomNormeBasic();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    NastavnoOsobljeSaDelomCasova osoba = s.Load<NastavnoOsobljeSaDelomCasova>(jmbg);
+                    nastavnik = new NastavnoOsobljeSaDelomNormeBasic(osoba.JMBG, osoba.Ime, osoba.Prezime, osoba.ImeRoditelja, osoba.AdresaStanovanja, osoba.BrojCasovaNedeljno, osoba.NazivOstalihSkola);
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom dohvatanja nastavnika sa delom norme: " + jmbg + ec.Message);
+            }
+            return nastavnik;
+
+        }
+        public static NenastavnoOsobljeBasic vratiNenastavnoOsoblje(string jmbg)
+        {
+            NenastavnoOsobljeBasic zaposleni = new NenastavnoOsobljeBasic();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    NenastavnoOsoblje osoba = s.Load<NenastavnoOsoblje>(jmbg);
+                    zaposleni = new NenastavnoOsobljeBasic(osoba.JMBG, osoba.Ime, osoba.Prezime, osoba.ImeRoditelja, osoba.AdresaStanovanja, osoba.ImeSektora,osoba.StrucnaSprema);
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom dohvatanja nenastavnog osoblja: " + jmbg + ec.Message);
+            }
+            return zaposleni;
+
+        }
+        public static List<NastavnoOsobljeSaPunomNormomPregled> vratiSveNastavnikeSaPunomNormom()
+        {
+            List<NastavnoOsobljeSaPunomNormomPregled> sviNastavniciSaPunomNormom = new List<NastavnoOsobljeSaPunomNormomPregled>();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    // Dohvata sve predmete iz baze podataka
+                    IEnumerable<OsobljeSaPunomNormom> svoOsobljeSaPunomNormom = s.Query<OsobljeSaPunomNormom>().ToList();
+
+                    // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
+                    foreach (OsobljeSaPunomNormom osoba in svoOsobljeSaPunomNormom)
+                    {
+                        sviNastavniciSaPunomNormom.Add(new NastavnoOsobljeSaPunomNormomPregled(osoba.JMBG, osoba.Ime, osoba.Prezime, osoba.ImeRoditelja,osoba.AdresaStanovanja,osoba.BrojCasova));
+                    }
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom pribavljanja svih nastavnika sa punom normom: " + ec.Message);
+            }
+            return sviNastavniciSaPunomNormom;
+        }
+        public static List<NastavnoOsobljeSaDelomNormePregled> vratiSveNastavnikeSaDelomNorme()
+        {
+            List<NastavnoOsobljeSaDelomNormePregled> sviNastavniciSaDelomNorme = new List<NastavnoOsobljeSaDelomNormePregled>();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    // Dohvata sve predmete iz baze podataka
+                    IEnumerable<NastavnoOsobljeSaDelomCasova> svoOsobljeSaDelomNorme = s.Query<NastavnoOsobljeSaDelomCasova>().ToList();
+
+                    // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
+                    foreach (NastavnoOsobljeSaDelomCasova osoba in svoOsobljeSaDelomNorme)
+                    {
+                        sviNastavniciSaDelomNorme.Add(new NastavnoOsobljeSaDelomNormePregled(osoba.JMBG, osoba.Ime, osoba.Prezime, osoba.ImeRoditelja, osoba.AdresaStanovanja, osoba.BrojCasovaNedeljno,osoba.NazivOstalihSkola));
+                    }
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom pribavljanja svih nastavnika sa delom norme: " + ec.Message);
+            }
+            return sviNastavniciSaDelomNorme;
+        }
+        public static List<NenastavnoOsobljePregled> vratiSvoNenastavnoOsoblje()
+        {
+            List<NenastavnoOsobljePregled> svoNenastavnoOsoblje = new List<NenastavnoOsobljePregled>();
+            try
+            {
+                using (ISession s = DataLayer.GetSession())
+                {
+                    // Dohvata sve predmete iz baze podataka
+                    IEnumerable<NenastavnoOsoblje> svi = s.Query<NenastavnoOsoblje>().ToList();
+
+                    // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
+                    foreach (NenastavnoOsoblje osoba in svi)
+                    {
+                        svoNenastavnoOsoblje.Add(new NenastavnoOsobljePregled(osoba.JMBG, osoba.Ime, osoba.Prezime, osoba.ImeRoditelja, osoba.AdresaStanovanja, osoba.ImeSektora, osoba.StrucnaSprema));
+                    }
+                    s.Close();
+                }
+            }
+            catch (Exception ec)
+            {
+                // Logovanje izuzetka
+                Console.WriteLine("Greška prilikom pribavljanja svih nenastavnih zaposlenih: " + ec.Message);
+            }
+            return svoNenastavnoOsoblje;
+        }
+        public static void dodajNastavnoOsobljeSaPunomNormom(NastavnoOsobljeSaPunomNormomBasic  nastavnik)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                OsobljeSaPunomNormom n = new OsobljeSaPunomNormom();
+                n.JMBG = nastavnik.JMBG;
+                n.Ime = nastavnik.Ime;
+                n.Prezime = nastavnik.Prezime;
+                n.ImeRoditelja = nastavnik.ImeRoditelja;
+                n.AdresaStanovanja = nastavnik.AdresaStanovanja;
+                n.BrojCasova = nastavnik.BrojCasova;
+
+                s.SaveOrUpdate(n);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom dodavanja nastavnika sa punom normom: " + nastavnik.JMBG +"; \nGreska:"+ ec.Message);
+            }
+        }
+        public static void obrisiNastavnoOsobljeSaPunomNormom(string JMBG)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                OsobljeSaPunomNormom n = s.Load<OsobljeSaPunomNormom>(JMBG);
+               
+                s.Delete(n);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom brisanja nastavnika sa punom normom: " + JMBG + "; \nGreska:" + ec.Message);
+            }
+        }
+
         #endregion
 
         #region AngazovanSaPunomNormom
+        
         #endregion
 
         #region AngazovanSaDelomNorme
