@@ -29,7 +29,7 @@ namespace SkolaProjekat.Forme
         }
         private void SmerForma_Load(object sender, EventArgs e)
         {
-
+            popuniPodacima();
         }
 
         private void btnDodajSmer_Click(object sender, EventArgs e)

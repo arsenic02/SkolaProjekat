@@ -229,8 +229,8 @@ namespace SkolaProjekat
             {
                 ISession s = DataLayer.GetSession();
                 Smer sm = s.Load<Smer>(smer.NazivSmera);
-                sm.NazivSmera = sm.NazivSmera;
-                sm.MaksimalanBrojUcenika = sm.MaksimalanBrojUcenika;
+                sm.NazivSmera = smer.NazivSmera;
+                sm.MaksimalanBrojUcenika = smer.MaksimalanBrojUcenika;
                 s.SaveOrUpdate(sm);
                 s.Flush();
                 s.Close();
@@ -433,18 +433,62 @@ namespace SkolaProjekat
         #endregion
 
         #region Predmet
+        public static List<StrucniPredmetPregled> vratiStrucnePredmeteSaSmera(string nazivSmera)
+        {
+            List<StrucniPredmetPregled> predmeti = new List<StrucniPredmetPregled>();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                IList<StrucniPredmet> predmets = s.Query<StrucniPredmet>().ToList();
+                
+                foreach (StrucniPredmet p in predmets)
+                {
+                    if (p.NazivSmera == nazivSmera)
+                        predmeti.Add(new StrucniPredmetPregled(p.NazivPredmeta, p.TipPredmeta, p.NazivSmera));
+                }
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja predmeta sa smera: " + ec.Message);
+            }
+            return predmeti;
+        }
+        public static List<OpsteobrazovniPredmetPregled> vratiOpsteobrazovnePredmeteSaSmera(string nazivSmera)
+        {
+            List<OpsteobrazovniPredmetPregled> predmeti = new List<OpsteobrazovniPredmetPregled>();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                IList<OpsteobrazovniPredmet> predmets = s.Query<OpsteobrazovniPredmet>().ToList();
+              
+                foreach (OpsteobrazovniPredmet p in predmets)
+                {
+                    if (p.NazivSmera == nazivSmera)
+                        predmeti.Add(new OpsteobrazovniPredmetPregled(p.NazivPredmeta, p.TipPredmeta, p.NazivSmera));
+                }
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja predmeta sa smera: " + ec.Message);
+            }
+            return predmeti;
+        }
         public static List<PredmetPregled> vratiPredmeteSaSmera(string nazivSmera)
         {
             List<PredmetPregled> predmeti = new List<PredmetPregled>();
             try
             {
                 ISession s = DataLayer.GetSession();
+                IList<Predmet> predmets = s.Query<Predmet>().ToList();
+              /*
                 IEnumerable<Predmet> predmets = from o in s.Query<Predmet>()
                                          where o.NazivSmera == nazivSmera
                                          select o;
+              */
 
                 foreach (Predmet p in predmets)
                 {
+                    if(p.NazivSmera==nazivSmera)
                     predmeti.Add(new PredmetPregled(p.NazivPredmeta,  p.TipPredmeta, p.NazivSmera));
                 }
             }
@@ -539,7 +583,7 @@ namespace SkolaProjekat
                 OpsteobrazovniPredmet p = s.Load<OpsteobrazovniPredmet>(naziv);
                 oop.NazivPredmeta = p.NazivPredmeta;
                 oop.NazivSmera = p.NazivSmera;
-                oop.TipPredmeta = p.TipPredmeta;
+                oop.TipPredmeta = "OOP";
 
                 s.Close();
             }
@@ -559,7 +603,7 @@ namespace SkolaProjekat
                 StrucniPredmet p = s.Load<StrucniPredmet>(naziv);
                 oop.NazivPredmeta = p.NazivPredmeta;
                 oop.NazivSmera = p.NazivSmera;
-                oop.TipPredmeta = p.TipPredmeta;
+                oop.TipPredmeta = "STR";
 
                 s.Close();
             }

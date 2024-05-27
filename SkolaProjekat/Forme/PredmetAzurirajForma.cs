@@ -14,26 +14,45 @@ namespace SkolaProjekat.Forme
 {
     public partial class PredmetAzurirajForma : Form
     {
-        PredmetBasic predmet;
+        OpsteobrazovniPredmetBasic ooPredmet;
+        StrucniPredmetBasic strPredmet;
+        string tip;
         public PredmetAzurirajForma()
         {
             InitializeComponent();
         }
-        public PredmetAzurirajForma(PredmetBasic p)
+        public PredmetAzurirajForma(OpsteobrazovniPredmetBasic p)
         {
             InitializeComponent();
-            predmet = p;
+            ooPredmet = p;
+            tip = p.TipPredmeta;
             popuniPodacima();
-            this.Text = $"AZURIRANJE PREDMETA{predmet.NazivSmera.ToUpper()}";
+            this.Text = $"AZURIRANJE PREDMETA{p.NazivSmera.ToUpper()}";
         }
+        public PredmetAzurirajForma(StrucniPredmetBasic p)
+        {
+            InitializeComponent();
+            strPredmet = p;
+            tip = p.TipPredmeta;
+            popuniPodacima();
+            this.Text = $"AZURIRANJE PREDMETA{p.NazivSmera.ToUpper()}";
+        }      
 
         private void PredmetAzurirajForma_Load(object sender, EventArgs e)
         {
-
+            popuniPodacima();
         }
         private void popuniPodacima()
-        {
-            tbNazivPredmeta.Text = this.predmet.NazivPredmeta;
+        {         
+            switch (tip)
+            {
+                case "OOP":
+                    tbNazivPredmeta.Text = this.ooPredmet.NazivPredmeta;
+                    break;
+                case "STR":
+                    tbNazivPredmeta.Text = this.strPredmet.NazivPredmeta;
+                    break;
+            }            
         }
         private void btnAzuriraj_Click(object sender, EventArgs e)
         {
@@ -46,9 +65,19 @@ namespace SkolaProjekat.Forme
 
             if (result == DialogResult.OK)
             {
-                predmet.NazivPredmeta = nazivPredmeta;
-                predmet.TipPredmeta = tipPredmeta;
-                DTOManager.azurirajPredmet(predmet);
+                switch (tip)
+                {
+                    case "OOP":
+                        this.ooPredmet.NazivPredmeta = tbNazivPredmeta.Text;
+                        this.ooPredmet.NazivPredmeta = tipPredmeta;
+                        DTOManager.azurirajOpsteobrazovniPredmet(ooPredmet);
+                        break;
+                    case "STR":
+                       this.strPredmet.NazivPredmeta = tbNazivPredmeta.Text;
+                        this.strPredmet.NazivPredmeta = tipPredmeta;
+                        DTOManager.azurirajStrucniPredmet(strPredmet);
+                        break;
+                }             
                 this.Close();
             }
 

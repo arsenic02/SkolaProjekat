@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjekatSkola.Entiteti;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,16 +14,23 @@ namespace SkolaProjekat.Forme
     public partial class PredmetDodajForma : Form
     {
         PredmetBasic predmet;
+        OpsteobrazovniPredmetBasic ooPredmet;
+        StrucniPredmetBasic strPredmet;
+
         string NazivSmera;
         public PredmetDodajForma()
         {
             InitializeComponent();
             predmet = new PredmetBasic();
+            ooPredmet = new OpsteobrazovniPredmetBasic();
+            strPredmet = new StrucniPredmetBasic();
         }
         public PredmetDodajForma(string nazivSmera)
         {
             InitializeComponent();
             predmet = new PredmetBasic();
+            ooPredmet = new OpsteobrazovniPredmetBasic();
+            strPredmet = new StrucniPredmetBasic();
             NazivSmera = nazivSmera;
         }
 
@@ -39,10 +47,23 @@ namespace SkolaProjekat.Forme
 
             if (result == DialogResult.OK)
             {
-                predmet.NazivPredmeta = tbNazivPredmeta.Text;
-                predmet.TipPredmeta = cbTipPredmeta.SelectedItem.ToString();
-                predmet.NazivSmera = NazivSmera;
-                DTOManager.azurirajPredmet(predmet);
+                
+                string s = cbTipPredmeta.SelectedItem.ToString();
+                switch (s)
+                {
+                    case "Opšteobrazovni Predmet":
+                        ooPredmet.TipPredmeta = "OOP";
+                        ooPredmet.NazivPredmeta = tbNazivPredmeta.Text;
+                        ooPredmet.NazivSmera = NazivSmera;
+                        DTOManager.dodajOpsteobrazovniPredmet(ooPredmet);
+                        break;
+                    case "Stručni Predmet":
+                        strPredmet.TipPredmeta = "STR";
+                        strPredmet.NazivPredmeta = tbNazivPredmeta.Text;
+                        strPredmet.NazivSmera = NazivSmera;
+                        DTOManager.dodajStrucniPredmet(strPredmet);
+                        break;
+                }
                 this.Close();
             }
         }
