@@ -37,7 +37,7 @@ namespace SkolaProjekat.Forme
 
         private void btnAzuriraj_Click(object sender, EventArgs e)
         {
-            string poruka = "Da li zelite da dodate novi smer?";
+            string poruka = "Da li zelite da azurirate smer?";
             string title = "Pitanje";
             MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
             DialogResult result = MessageBox.Show(poruka, title, buttons);

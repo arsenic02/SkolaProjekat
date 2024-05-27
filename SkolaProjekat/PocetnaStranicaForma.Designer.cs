@@ -45,12 +45,13 @@
             btnUceniciForma = new Button();
             btnSmerForma = new Button();
             btnZaposleniForm = new Button();
+            button1 = new Button();
             SuspendLayout();
             // 
             // btnManyToOne
             // 
             btnManyToOne.Location = new Point(41, 159);
-            btnManyToOne.Margin = new Padding(2, 2, 2, 2);
+            btnManyToOne.Margin = new Padding(2);
             btnManyToOne.Name = "btnManyToOne";
             btnManyToOne.Size = new Size(179, 20);
             btnManyToOne.TabIndex = 2;
@@ -61,7 +62,7 @@
             // btnOneToMany
             // 
             btnOneToMany.Location = new Point(41, 193);
-            btnOneToMany.Margin = new Padding(2, 2, 2, 2);
+            btnOneToMany.Margin = new Padding(2);
             btnOneToMany.Name = "btnOneToMany";
             btnOneToMany.Size = new Size(179, 20);
             btnOneToMany.TabIndex = 3;
@@ -72,7 +73,7 @@
             // btnUcitavanjeRazreda
             // 
             btnUcitavanjeRazreda.Location = new Point(41, 31);
-            btnUcitavanjeRazreda.Margin = new Padding(2, 2, 2, 2);
+            btnUcitavanjeRazreda.Margin = new Padding(2);
             btnUcitavanjeRazreda.Name = "btnUcitavanjeRazreda";
             btnUcitavanjeRazreda.Size = new Size(181, 20);
             btnUcitavanjeRazreda.TabIndex = 4;
@@ -83,7 +84,7 @@
             // btnDodavanjeUcenika
             // 
             btnDodavanjeUcenika.Location = new Point(41, 224);
-            btnDodavanjeUcenika.Margin = new Padding(2, 2, 2, 2);
+            btnDodavanjeUcenika.Margin = new Padding(2);
             btnDodavanjeUcenika.Name = "btnDodavanjeUcenika";
             btnDodavanjeUcenika.Size = new Size(179, 20);
             btnDodavanjeUcenika.TabIndex = 5;
@@ -94,7 +95,7 @@
             // btnManyToMany
             // 
             btnManyToMany.Location = new Point(41, 258);
-            btnManyToMany.Margin = new Padding(2, 2, 2, 2);
+            btnManyToMany.Margin = new Padding(2);
             btnManyToMany.Name = "btnManyToMany";
             btnManyToMany.Size = new Size(179, 20);
             btnManyToMany.TabIndex = 6;
@@ -105,7 +106,7 @@
             // btnDodavanjePredmeta
             // 
             btnDodavanjePredmeta.Location = new Point(43, 290);
-            btnDodavanjePredmeta.Margin = new Padding(2, 2, 2, 2);
+            btnDodavanjePredmeta.Margin = new Padding(2);
             btnDodavanjePredmeta.Name = "btnDodavanjePredmeta";
             btnDodavanjePredmeta.Size = new Size(179, 20);
             btnDodavanjePredmeta.TabIndex = 7;
@@ -116,7 +117,7 @@
             // AbtnAngazovanSaDelomCasova
             // 
             AbtnAngazovanSaDelomCasova.Location = new Point(43, 323);
-            AbtnAngazovanSaDelomCasova.Margin = new Padding(2, 2, 2, 2);
+            AbtnAngazovanSaDelomCasova.Margin = new Padding(2);
             AbtnAngazovanSaDelomCasova.Name = "AbtnAngazovanSaDelomCasova";
             AbtnAngazovanSaDelomCasova.Size = new Size(179, 20);
             AbtnAngazovanSaDelomCasova.TabIndex = 8;
@@ -127,7 +128,7 @@
             // btnDodavanjeRazreda
             // 
             btnDodavanjeRazreda.Location = new Point(43, 63);
-            btnDodavanjeRazreda.Margin = new Padding(2, 2, 2, 2);
+            btnDodavanjeRazreda.Margin = new Padding(2);
             btnDodavanjeRazreda.Name = "btnDodavanjeRazreda";
             btnDodavanjeRazreda.Size = new Size(179, 20);
             btnDodavanjeRazreda.TabIndex = 9;
@@ -138,7 +139,7 @@
             // btnDodavanjeRazrednogVeca
             // 
             btnDodavanjeRazrednogVeca.Location = new Point(43, 124);
-            btnDodavanjeRazrednogVeca.Margin = new Padding(2, 2, 2, 2);
+            btnDodavanjeRazrednogVeca.Margin = new Padding(2);
             btnDodavanjeRazrednogVeca.Name = "btnDodavanjeRazrednogVeca";
             btnDodavanjeRazrednogVeca.Size = new Size(177, 20);
             btnDodavanjeRazrednogVeca.TabIndex = 10;
@@ -149,7 +150,7 @@
             // btnUcitavanjeRazrednogVeca
             // 
             btnUcitavanjeRazrednogVeca.Location = new Point(43, 94);
-            btnUcitavanjeRazrednogVeca.Margin = new Padding(2, 2, 2, 2);
+            btnUcitavanjeRazrednogVeca.Margin = new Padding(2);
             btnUcitavanjeRazrednogVeca.Name = "btnUcitavanjeRazrednogVeca";
             btnUcitavanjeRazrednogVeca.Size = new Size(177, 20);
             btnUcitavanjeRazrednogVeca.TabIndex = 11;
@@ -228,11 +229,22 @@
             btnZaposleniForm.UseVisualStyleBackColor = true;
             btnZaposleniForm.Click += btnZaposleniForm_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(569, 320);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 19;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_1;
+            // 
             // PocetnaStranicaForma
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(915, 371);
+            Controls.Add(button1);
             Controls.Add(btnUceniciForma);
             Controls.Add(btnSmerForma);
             Controls.Add(btnZaposleniForm);
@@ -250,7 +262,7 @@
             Controls.Add(btnUcitavanjeRazreda);
             Controls.Add(btnOneToMany);
             Controls.Add(btnManyToOne);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "PocetnaStranicaForma";
             Text = "Dodavanje predmeta";
             ResumeLayout(false);
@@ -275,5 +287,6 @@
         private Button btnUceniciForma;
         private Button btnSmerForma;
         private Button btnZaposleniForm;
+        private Button button1;
     }
 }

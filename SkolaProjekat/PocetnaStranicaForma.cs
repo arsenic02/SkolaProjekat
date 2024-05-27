@@ -530,12 +530,12 @@ namespace SkolaProjekat
 
         private void label1_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void btnZaposleniForm_Click(object sender, EventArgs e)
         {
-             ZaposleniForma zaposleniForma = new ZaposleniForma();
+            ZaposleniForma zaposleniForma = new ZaposleniForma();
             zaposleniForma.ShowDialog();
         }
 
@@ -549,6 +549,12 @@ namespace SkolaProjekat
         {
             UceniciForma uceniciForma = new UceniciForma();
             uceniciForma.ShowDialog();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            OcenaAzurirajForma o = new OcenaAzurirajForma();
+            o.ShowDialog();
         }
     }
 }

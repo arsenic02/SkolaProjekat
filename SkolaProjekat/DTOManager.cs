@@ -433,6 +433,28 @@ namespace SkolaProjekat
         #endregion
 
         #region Predmet
+        public static List<PredmetPregled> vratiPredmeteSaSmera(string nazivSmera)
+        {
+            List<PredmetPregled> predmeti = new List<PredmetPregled>();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                IEnumerable<Predmet> predmets = from o in s.Query<Predmet>()
+                                         where o.NazivSmera == nazivSmera
+                                         select o;
+
+                foreach (Predmet p in predmets)
+                {
+                    predmeti.Add(new PredmetPregled(p.NazivPredmeta,  p.TipPredmeta, p.NazivSmera));
+                }
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja predmeta sa smera: " + ec.Message);
+            }
+           return predmeti;
+
+        }
         public static List<PredmetPregled> vratiSvePredmete()
         {
             List<PredmetPregled> sviPredmetiPregled = new List<PredmetPregled>();
