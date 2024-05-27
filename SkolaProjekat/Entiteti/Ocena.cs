@@ -8,7 +8,7 @@ namespace ProjekatSkola.Entiteti
 {
     public class Ocena
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual string NazivPredmeta { get; set; }
         public virtual string JedinstveniBrojUcenika { get; set; }
         public virtual DateTime DatumDobijanjaOcene { get; set; }

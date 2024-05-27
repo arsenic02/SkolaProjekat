@@ -1049,7 +1049,7 @@ namespace SkolaProjekat
                 n.AdresaStanovanja = nastavnik.AdresaStanovanja;
                 n.BrojCasova = nastavnik.BrojCasova;
 
-                s.SaveOrUpdate(n);
+                s.SaveOrUpdate(n); 
                 s.Flush();
                 s.Close();
             }

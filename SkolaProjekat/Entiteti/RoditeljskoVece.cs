@@ -12,7 +12,7 @@ namespace ProjekatSkola.Entiteti
         public virtual string ImeRoditelja { get; set; }
         public virtual string PrezimeRoditelja { get; set; }
         public virtual string Telefon { get; set; }
-        public IList<Ucenik> SuUcenici { get; set; }
+        public virtual IList<Ucenik> SuUcenici { get; set; }
         public RoditeljskoVece()
         {
             SuUcenici = new List<Ucenik>();
