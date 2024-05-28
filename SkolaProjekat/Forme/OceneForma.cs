@@ -36,7 +36,7 @@ namespace SkolaProjekat.Forme
         }
         private void OceneForma_Load(object sender, EventArgs e)
         {
-
+            popuniPodacima();
         }
 
         private void label1_Click(object sender, EventArgs e)

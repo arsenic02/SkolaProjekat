@@ -781,10 +781,10 @@ namespace SkolaProjekat
             try
             {
                 ISession s = DataLayer.GetSession();
+                List<Ocena> ocene = s.Query<Ocena>()
+                              .Where(o => o.JedinstveniBrojUcenika == ucenikID)
+                              .ToList();
 
-                IEnumerable<Ocena> ocene = from o in s.Query<Ocena>()
-                                                      where o.JedinstveniBrojUcenika == ucenikID
-                                                      select o;
                 foreach (Ocena ocena in ocene)
                 {
                     oceneUcenikaPregled.Add(new OcenaPregled(ocena.NazivPredmeta, ocena.JedinstveniBrojUcenika, ocena.DatumDobijanjaOcene, ocena.NumerickaVrednost, ocena.TekstualniOpis));
@@ -1013,8 +1013,8 @@ namespace SkolaProjekat
                 using (ISession s = DataLayer.GetSession())
                 {
                     // Dohvata sve predmete iz baze podataka
-                    IEnumerable<OsobljeSaPunomNormom> svoOsobljeSaPunomNormom = s.Query<OsobljeSaPunomNormom>().ToList();
-
+                   // IEnumerable<OsobljeSaPunomNormom> svoOsobljeSaPunomNormom = s.Query<OsobljeSaPunomNormom>().ToList();
+                    IList<OsobljeSaPunomNormom> svoOsobljeSaPunomNormom = s.Query<OsobljeSaPunomNormom>().ToList();
                     // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
                     foreach (OsobljeSaPunomNormom osoba in svoOsobljeSaPunomNormom)
                     {
@@ -1038,8 +1038,8 @@ namespace SkolaProjekat
                 using (ISession s = DataLayer.GetSession())
                 {
                     // Dohvata sve predmete iz baze podataka
-                    IEnumerable<NastavnoOsobljeSaDelomCasova> svoOsobljeSaDelomNorme = s.Query<NastavnoOsobljeSaDelomCasova>().ToList();
-
+                    //IEnumerable<NastavnoOsobljeSaDelomCasova> svoOsobljeSaDelomNorme = s.Query<NastavnoOsobljeSaDelomCasova>().ToList();
+                    IList<NastavnoOsobljeSaDelomCasova> svoOsobljeSaDelomNorme = s.Query<NastavnoOsobljeSaDelomCasova>().ToList();
                     // Pretvara svaki Predmet u PredmetPregled objekat i dodaje u listu
                     foreach (NastavnoOsobljeSaDelomCasova osoba in svoOsobljeSaDelomNorme)
                     {

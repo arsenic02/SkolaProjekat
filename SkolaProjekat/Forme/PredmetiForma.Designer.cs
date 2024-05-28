@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             btnObrisi = new Button();
-            btnAzuriraj = new Button();
             btnDodaj = new Button();
             listaPredmeta = new ListView();
             columnHeader8 = new ColumnHeader();
@@ -45,16 +44,6 @@
             btnObrisi.Text = "Obrisi";
             btnObrisi.UseVisualStyleBackColor = true;
             btnObrisi.Click += btnObrisi_Click;
-            // 
-            // btnAzuriraj
-            // 
-            btnAzuriraj.Location = new Point(223, 82);
-            btnAzuriraj.Name = "btnAzuriraj";
-            btnAzuriraj.Size = new Size(90, 35);
-            btnAzuriraj.TabIndex = 14;
-            btnAzuriraj.Text = "Azuriraj";
-            btnAzuriraj.UseVisualStyleBackColor = true;
-            btnAzuriraj.Click += btnAzuriraj_Click;
             // 
             // btnDodaj
             // 
@@ -94,7 +83,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(342, 345);
             Controls.Add(btnObrisi);
-            Controls.Add(btnAzuriraj);
             Controls.Add(btnDodaj);
             Controls.Add(listaPredmeta);
             MaximumSize = new Size(358, 384);
@@ -108,7 +96,6 @@
         #endregion
 
         private Button btnObrisi;
-        private Button btnAzuriraj;
         private Button btnDodaj;
         private ListView listaPredmeta;
         private ColumnHeader columnHeader8;

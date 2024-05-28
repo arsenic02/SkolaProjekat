@@ -18,11 +18,11 @@ namespace SkolaProjekat.Mapiranja
     {
         public OsobljeSaPunomNormomMapiranja()
         {
-            Table("Osoblje_sa_punom_normom");
+            Table("OSOBLJE_SA_PUNOM_NORMOM");
 
             Abstract();
 
-            Map(p => p.BrojCasova).Column("BROJ_CASOVA_NEDELJNO");
+            Map(p => p.BrojCasova).Column("BROJ_CASOVA");
 
             HasMany(p => p.PredmeteKojePredaje).KeyColumn("JMBG_NASTAVNIKA").LazyLoad().Cascade.All().Inverse();
         }

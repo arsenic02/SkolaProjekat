@@ -22,6 +22,7 @@ namespace SkolaProjekat.Forme
         {
             InitializeComponent();
             smer = s;
+            tbNazivSmera.Enabled = false;
         }
 
         private void popuniPodacima()

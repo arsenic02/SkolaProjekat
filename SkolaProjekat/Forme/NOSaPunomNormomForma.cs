@@ -18,10 +18,7 @@ namespace SkolaProjekat.Forme
             InitializeComponent();
         }
 
-        private void NOSaPunomNormomForma_Load(object sender, EventArgs e)
-        {
-            popuniPodacima();
-        }
+     
 
         private void popuniPodacima()
         {
@@ -90,7 +87,7 @@ namespace SkolaProjekat.Forme
 
         private void NOSaPunomNormomForma_Load_1(object sender, EventArgs e)
         {
-
+            popuniPodacima();
         }
     }
 }

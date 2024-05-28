@@ -23,7 +23,7 @@ namespace SkolaProjekat.Forme
 
             foreach (UcenikPregled n in podaci)
             {
-                ListViewItem item = new ListViewItem(new string[] { n.JedinstveniUpisniBroj,n.Ime,n.Prezime,n.AdresaStanovanja,n.DatumUpisa.ToString()});
+                ListViewItem item = new ListViewItem(new string[] { n.JedinstveniUpisniBroj, n.Ime, n.Prezime, n.AdresaStanovanja, n.DatumUpisa.ToString() });
                 listaUcenika.Items.Add(item);
             }
         }
@@ -83,6 +83,11 @@ namespace SkolaProjekat.Forme
             {
 
             }
+        }
+
+        private void UceniciForma_Load(object sender, EventArgs e)
+        {
+            popuniPodacima();
         }
     }
 }

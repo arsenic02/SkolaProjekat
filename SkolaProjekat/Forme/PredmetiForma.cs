@@ -52,31 +52,11 @@ namespace SkolaProjekat.Forme
             forma.ShowDialog();
             this.popuniPodacima();
         }
-
+        
         private void btnAzuriraj_Click(object sender, EventArgs e)
         {
-            if (listaPredmeta.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("Izaberite predmet cije podatke zelite da izmenite!");
-                return;
-            }
-            string naziv = listaPredmeta.SelectedItems[0].SubItems[0].Text;
-            string tip = listaPredmeta.SelectedItems[0].SubItems[1].Text;
-            switch(tip)
-            {
-                case "OOP":
-                    OpsteobrazovniPredmetBasic oop = DTOManager.vrtatiOpsteobrazovniPredmet(naziv);
-                    PredmetAzurirajForma forma1 = new PredmetAzurirajForma(oop);
-                    forma1.ShowDialog();
-                    break;
-                case "STR":
-                    StrucniPredmetBasic str = DTOManager.vratiStrucniPredmet(naziv);
-                    PredmetAzurirajForma forma2 = new PredmetAzurirajForma(str);
-                    forma2.ShowDialog();
-                    break;
-            }           
-            this.popuniPodacima();
         }
+        
 
         private void btnObrisi_Click(object sender, EventArgs e)
         {
@@ -93,7 +73,7 @@ namespace SkolaProjekat.Forme
 
             if (result == DialogResult.OK)
             {
-                DTOManager.obrisiSmer(naziv);
+                DTOManager.obrisiPredmet(naziv);
                 MessageBox.Show("Brisanje predmeta je uspesno obavljeno!");
                 this.popuniPodacima();
             }

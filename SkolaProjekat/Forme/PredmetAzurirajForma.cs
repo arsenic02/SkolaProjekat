@@ -80,7 +80,6 @@ namespace SkolaProjekat.Forme
                 }             
                 this.Close();
             }
-
         }
     }
 }

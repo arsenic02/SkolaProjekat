@@ -131,6 +131,7 @@
             MinimumSize = new Size(705, 384);
             Name = "UceniciForma";
             Text = "UceniciForma";
+            Load += UceniciForma_Load;
             ResumeLayout(false);
         }
 
