@@ -30,6 +30,8 @@ namespace SkolaProjekat
             Ocene = new List<OcenaBasic>();
             Predmeti = new List<PredmetBasic>();
             SuRoditelji = new List<RoditeljskoVeceBasic>();
+            PohadjaRazred = new RazredBasic();
+            JeUpisan = new SmerBasic();
         }
 
         public UcenikBasic(string jbu, string ime,string prezime, string adresa,DateTime datumUpisa, RazredBasic razred,SmerBasic smer)
@@ -297,13 +299,14 @@ namespace SkolaProjekat
         public   PredmetBasic JeIz { get; set; }
       
         public OcenaBasic() { }
-        public OcenaBasic(string nazivPredmeta, string JBU, DateTime datumDobijanjaOcene, int numerickaVrednost, string tekstualniOpis) 
+        public OcenaBasic(int Id, string nazivPredmeta, string JBU, DateTime datumDobijanjaOcene, int numerickaVrednost, string tekstualniOpis) 
         {
             NazivPredmeta = nazivPredmeta;
             JedinstveniBrojUcenika = JBU;
             DatumDobijanjaOcene = datumDobijanjaOcene;
             NumerickaVrednost = numerickaVrednost;
             TekstualniOpis = tekstualniOpis;
+            this.Id = Id;
         }
     }
     public class OcenaPregled
@@ -315,13 +318,14 @@ namespace SkolaProjekat
         public int NumerickaVrednost { get; set; }
         public string TekstualniOpis { get; set; }
         public OcenaPregled() { }
-        public OcenaPregled(string nazivPredmeta, string JBU, DateTime datumDobijanjaOcene, int numerickaVrednost, string tekstualniOpis)
+        public OcenaPregled(int Id,string nazivPredmeta, string JBU, DateTime datumDobijanjaOcene, int numerickaVrednost, string tekstualniOpis)
         {
             NazivPredmeta = nazivPredmeta;
             JedinstveniBrojUcenika = JBU;
             DatumDobijanjaOcene = datumDobijanjaOcene;
             NumerickaVrednost = numerickaVrednost;
             TekstualniOpis = tekstualniOpis;
+            this.Id = Id;
         }
     }
 

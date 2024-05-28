@@ -39,6 +39,7 @@
             dtpDatum = new DateTimePicker();
             label1 = new Label();
             tbId = new TextBox();
+            cbNazivPredmeta = new ComboBox();
             SuspendLayout();
             // 
             // label6
@@ -53,7 +54,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(11, 157);
+            label5.Location = new Point(12, 106);
             label5.Name = "label5";
             label5.Size = new Size(84, 15);
             label5.TabIndex = 26;
@@ -61,7 +62,7 @@
             // 
             // tbOpis
             // 
-            tbOpis.Location = new Point(11, 175);
+            tbOpis.Location = new Point(12, 124);
             tbOpis.Name = "tbOpis";
             tbOpis.Size = new Size(100, 23);
             tbOpis.TabIndex = 25;
@@ -69,7 +70,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(11, 111);
+            label3.Location = new Point(12, 60);
             label3.Name = "label3";
             label3.Size = new Size(149, 15);
             label3.TabIndex = 24;
@@ -77,7 +78,7 @@
             // 
             // tbNumerickaVrednost
             // 
-            tbNumerickaVrednost.Location = new Point(11, 129);
+            tbNumerickaVrednost.Location = new Point(12, 78);
             tbNumerickaVrednost.Name = "tbNumerickaVrednost";
             tbNumerickaVrednost.Size = new Size(100, 23);
             tbNumerickaVrednost.TabIndex = 23;
@@ -85,7 +86,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(11, 59);
+            label2.Location = new Point(11, 153);
             label2.Name = "label2";
             label2.Size = new Size(90, 15);
             label2.TabIndex = 20;
@@ -93,7 +94,7 @@
             // 
             // tbNazivPredmeta
             // 
-            tbNazivPredmeta.Location = new Point(11, 77);
+            tbNazivPredmeta.Location = new Point(11, 171);
             tbNazivPredmeta.Name = "tbNazivPredmeta";
             tbNazivPredmeta.Size = new Size(100, 23);
             tbNazivPredmeta.TabIndex = 19;
@@ -126,16 +127,26 @@
             // 
             // tbId
             // 
+            tbId.Enabled = false;
             tbId.Location = new Point(11, 30);
             tbId.Name = "tbId";
             tbId.Size = new Size(100, 23);
             tbId.TabIndex = 15;
+            // 
+            // cbNazivPredmeta
+            // 
+            cbNazivPredmeta.FormattingEnabled = true;
+            cbNazivPredmeta.Location = new Point(12, 200);
+            cbNazivPredmeta.Name = "cbNazivPredmeta";
+            cbNazivPredmeta.Size = new Size(205, 23);
+            cbNazivPredmeta.TabIndex = 28;
             // 
             // OcenaDodajForma
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(490, 280);
+            Controls.Add(cbNazivPredmeta);
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(tbOpis);
@@ -169,5 +180,6 @@
         private DateTimePicker dtpDatum;
         private Label label1;
         private TextBox tbId;
+        private ComboBox cbNazivPredmeta;
     }
 }

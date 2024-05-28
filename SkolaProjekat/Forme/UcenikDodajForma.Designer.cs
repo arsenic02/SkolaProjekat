@@ -38,6 +38,10 @@
             tbJUB = new TextBox();
             dtpDatum = new DateTimePicker();
             btnDodaj = new Button();
+            cbRazred = new ComboBox();
+            cbSmer = new ComboBox();
+            label5 = new Label();
+            label6 = new Label();
             SuspendLayout();
             // 
             // label4
@@ -122,11 +126,49 @@
             btnDodaj.UseVisualStyleBackColor = true;
             btnDodaj.Click += btnDodaj_Click;
             // 
+            // cbRazred
+            // 
+            cbRazred.FormattingEnabled = true;
+            cbRazred.Location = new Point(12, 156);
+            cbRazred.Name = "cbRazred";
+            cbRazred.Size = new Size(121, 23);
+            cbRazred.TabIndex = 39;
+            // 
+            // cbSmer
+            // 
+            cbSmer.FormattingEnabled = true;
+            cbSmer.Location = new Point(166, 156);
+            cbSmer.Name = "cbSmer";
+            cbSmer.Size = new Size(121, 23);
+            cbSmer.TabIndex = 40;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(12, 138);
+            label5.Name = "label5";
+            label5.Size = new Size(45, 15);
+            label5.TabIndex = 41;
+            label5.Text = "Razred:";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(166, 138);
+            label6.Name = "label6";
+            label6.Size = new Size(37, 15);
+            label6.TabIndex = 42;
+            label6.Text = "Smer:";
+            // 
             // UcenikDodajForma
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(490, 280);
+            Controls.Add(label6);
+            Controls.Add(label5);
+            Controls.Add(cbSmer);
+            Controls.Add(cbRazred);
             Controls.Add(label4);
             Controls.Add(tbAdresa);
             Controls.Add(label3);
@@ -158,5 +200,9 @@
         private TextBox tbJUB;
         private DateTimePicker dtpDatum;
         private Button btnDodaj;
+        private ComboBox cbRazred;
+        private ComboBox cbSmer;
+        private Label label5;
+        private Label label6;
     }
 }

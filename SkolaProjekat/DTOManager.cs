@@ -65,10 +65,10 @@ namespace SkolaProjekat
                 o.Prezime = u.Prezime;
                 o.AdresaStanovanja = u.AdresaStanovanja;
                 o.DatumUpisa = u.DatumUpisa;
-                ProjekatSkola.Entiteti.Razred razred = s.Load<ProjekatSkola.Entiteti.Razred>(u.PohadjaRazred.RedniBrojRazreda);
-                o.PohadjaRazred = razred;
-                ProjekatSkola.Entiteti.Smer smer = s.Load<ProjekatSkola.Entiteti.Smer>(u.JeUpisan.NazivSmera);
-                o.JeUpisan = smer;
+                  ProjekatSkola.Entiteti.Razred razred = s.Load<ProjekatSkola.Entiteti.Razred>(u.PohadjaRazred.RedniBrojRazreda);
+                  o.PohadjaRazred = razred;
+                  ProjekatSkola.Entiteti.Smer smer = s.Load<ProjekatSkola.Entiteti.Smer>(u.JeUpisan.NazivSmera);
+                  o.JeUpisan = smer;
 
                 s.SaveOrUpdate(o);
 
@@ -152,6 +152,7 @@ namespace SkolaProjekat
 
 
         #region Smer
+
         public static SmerBasic vratiSmer(string nazivSmera)
         {
             SmerBasic smer = new SmerBasic();
@@ -433,6 +434,35 @@ namespace SkolaProjekat
         #endregion
 
         #region Predmet
+        public static List<PredmetPregled> vratiSvePredmeteSaSmeraUcenika(string jbu)
+        {
+            List<PredmetPregled> predmeti = new List<PredmetPregled>();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                Ucenik ucenik = s.Load<Ucenik>(jbu);     
+                //Vraca sve predmete koji su sa smera gde je ucenik
+                IList<Predmet> predmets = s.Query<Predmet>().Where(o => o.NazivSmera == ucenik.JeUpisan.NazivSmera).ToList();
+
+               // IList<Predmet> predmets = s.Query<Predmet>().ToList();
+                /*
+                  IEnumerable<Predmet> predmets = from o in s.Query<Predmet>()
+                                           where o.NazivSmera == nazivSmera
+                                           select o;
+                */
+
+                foreach (Predmet p in predmets)
+                {
+                   predmeti.Add(new PredmetPregled(p.NazivPredmeta, p.TipPredmeta, p.NazivSmera));
+                }
+            }
+            catch (Exception ec)
+            {
+                Console.WriteLine("Greška prilikom vracanja predmeta sa smera: " + ec.Message);
+            }
+            return predmeti;
+
+        }
         public static List<StrucniPredmetPregled> vratiStrucnePredmeteSaSmera(string nazivSmera)
         {
             List<StrucniPredmetPregled> predmeti = new List<StrucniPredmetPregled>();
@@ -781,14 +811,11 @@ namespace SkolaProjekat
             try
             {
                 ISession s = DataLayer.GetSession();
-                List<Ocena> ocene = s.Query<Ocena>().ToList();
-
-                //Where(o => o.JedinstveniBrojUcenika == ucenikID).
-
+                List<Ocena> ocene = s.Query<Ocena>().Where(o => o.JeDobio.JedinstveniUpisniBroj == ucenikID).ToList();
 
                 foreach (Ocena ocena in ocene)
                 {
-                    oceneUcenikaPregled.Add(new OcenaPregled(ocena.NazivPredmeta, ocena.JedinstveniBrojUcenika, ocena.DatumDobijanjaOcene, ocena.NumerickaVrednost, ocena.TekstualniOpis));
+                    oceneUcenikaPregled.Add(new OcenaPregled(ocena.Id,ocena.JeIz.NazivPredmeta, ocena.JeDobio.JedinstveniUpisniBroj, ocena.DatumDobijanjaOcene, ocena.NumerickaVrednost, ocena.TekstualniOpis));
                 }
 
                 s.Close();
@@ -808,7 +835,7 @@ namespace SkolaProjekat
                                            select o;
                 foreach (Ocena ocena in ocene)
                 {
-                    ocenePredmetaPregled.Add(new OcenaPregled(ocena.NazivPredmeta, ocena.JedinstveniBrojUcenika, ocena.DatumDobijanjaOcene, ocena.NumerickaVrednost, ocena.TekstualniOpis));
+                    ocenePredmetaPregled.Add(new OcenaPregled(ocena.Id, ocena.NazivPredmeta, ocena.JedinstveniBrojUcenika, ocena.DatumDobijanjaOcene, ocena.NumerickaVrednost, ocena.TekstualniOpis));
                 }
 
                 s.Close();
@@ -829,7 +856,7 @@ namespace SkolaProjekat
                     // Pretvara svaku Ocenu u OcenaPregled objekat i dodaje u listu
                     foreach (Ocena ocena in sveOcene)
                     {
-                        sveOcenePregled.Add(new OcenaPregled(ocena.NazivPredmeta, ocena.JedinstveniBrojUcenika, ocena.DatumDobijanjaOcene, ocena.NumerickaVrednost, ocena.TekstualniOpis));
+                        sveOcenePregled.Add(new OcenaPregled(ocena.Id, ocena.NazivPredmeta, ocena.JedinstveniBrojUcenika, ocena.DatumDobijanjaOcene, ocena.NumerickaVrednost, ocena.TekstualniOpis));
                     }
                     s.Close();
                 }
@@ -849,7 +876,7 @@ namespace SkolaProjekat
                 using (ISession s = DataLayer.GetSession())
                 {
                     Ocena o = s.Load<Ocena>(id);
-                    ob = new OcenaBasic(o.NazivPredmeta, o.JedinstveniBrojUcenika, o.DatumDobijanjaOcene, o.NumerickaVrednost, o.TekstualniOpis);
+                    ob = new OcenaBasic(o.Id, o.NazivPredmeta, o.JedinstveniBrojUcenika, o.DatumDobijanjaOcene, o.NumerickaVrednost, o.TekstualniOpis);
                     s.Close();
                 }
             }
