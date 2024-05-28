@@ -34,8 +34,8 @@ namespace SkolaProjekat.Mapiranja
 
             // 1:N SMER-UCENIK
             //U KEY COLUMN IDE STRANI KLJUC IZ OCENA
-            HasMany(p => p.Ocene).KeyColumn("JBU").LazyLoad().Cascade.All().Inverse();           
-
+            HasMany(p => p.Ocene).KeyColumn("JEDINSTVENI_KOD_OCENE").LazyLoad().Cascade.All().Inverse();
+            
             HasManyToMany(p => p.SuRoditelji)
            .Table("JE_RODITELJ")
            .ParentKeyColumn("JBU")

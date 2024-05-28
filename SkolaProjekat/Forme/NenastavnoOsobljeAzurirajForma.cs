@@ -27,6 +27,7 @@ namespace SkolaProjekat.Forme
         {
             popuniPodacima();
             this.Text = $"AZURIRANJE NASTAVNIKA {zaposleni.Ime.ToUpper()} {zaposleni.Prezime.ToUpper()}";
+            tbJMBG.Enabled = false;
         }
         private void popuniPodacima()
         {

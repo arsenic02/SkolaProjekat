@@ -14,9 +14,7 @@ namespace SkolaProjekat.Mapiranja
         {
             Table("Ocena");
 
-            Id(x => x.Id)
-           .Column("Jedinstveni_kod_ocene")
-           .GeneratedBy.Identity();
+            Id(x => x.Id).Column("Jedinstveni_kod_ocene").GeneratedBy.Identity();
 
             //Map(x => x.JedinstveniBrojUcenika).Column("JBU");
             // 1:N Ucenik-Ocena
@@ -25,8 +23,8 @@ namespace SkolaProjekat.Mapiranja
 
             Map(x => x.NumerickaVrednost).Column("NUMERICKA_VREDNOST");
             Map(x => x.TekstualniOpis).Column("TEKSTUALNI_OPIS");
-
-           
+            Map(x => x.DatumDobijanjaOcene).Column("DATUM_DOBIJANJA_OCENE");
+         
         }
     }
 }

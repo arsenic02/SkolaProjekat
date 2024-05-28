@@ -781,9 +781,10 @@ namespace SkolaProjekat
             try
             {
                 ISession s = DataLayer.GetSession();
-                List<Ocena> ocene = s.Query<Ocena>()
-                              .Where(o => o.JedinstveniBrojUcenika == ucenikID)
-                              .ToList();
+                List<Ocena> ocene = s.Query<Ocena>().ToList();
+
+                //Where(o => o.JedinstveniBrojUcenika == ucenikID).
+
 
                 foreach (Ocena ocena in ocene)
                 {
