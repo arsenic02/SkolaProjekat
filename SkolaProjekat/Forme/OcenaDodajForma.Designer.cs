@@ -34,7 +34,6 @@
             label3 = new Label();
             tbNumerickaVrednost = new TextBox();
             label2 = new Label();
-            tbNazivPredmeta = new TextBox();
             btnDodaj = new Button();
             dtpDatum = new DateTimePicker();
             label1 = new Label();
@@ -92,13 +91,6 @@
             label2.TabIndex = 20;
             label2.Text = "Naziv Predmeta";
             // 
-            // tbNazivPredmeta
-            // 
-            tbNazivPredmeta.Location = new Point(11, 171);
-            tbNazivPredmeta.Name = "tbNazivPredmeta";
-            tbNazivPredmeta.Size = new Size(100, 23);
-            tbNazivPredmeta.TabIndex = 19;
-            // 
             // btnDodaj
             // 
             btnDodaj.Location = new Point(335, 209);
@@ -136,7 +128,7 @@
             // cbNazivPredmeta
             // 
             cbNazivPredmeta.FormattingEnabled = true;
-            cbNazivPredmeta.Location = new Point(12, 200);
+            cbNazivPredmeta.Location = new Point(12, 171);
             cbNazivPredmeta.Name = "cbNazivPredmeta";
             cbNazivPredmeta.Size = new Size(205, 23);
             cbNazivPredmeta.TabIndex = 28;
@@ -153,7 +145,6 @@
             Controls.Add(label3);
             Controls.Add(tbNumerickaVrednost);
             Controls.Add(label2);
-            Controls.Add(tbNazivPredmeta);
             Controls.Add(btnDodaj);
             Controls.Add(dtpDatum);
             Controls.Add(label1);
@@ -175,7 +166,6 @@
         private Label label3;
         private TextBox tbNumerickaVrednost;
         private Label label2;
-        private TextBox tbNazivPredmeta;
         private Button btnDodaj;
         private DateTimePicker dtpDatum;
         private Label label1;

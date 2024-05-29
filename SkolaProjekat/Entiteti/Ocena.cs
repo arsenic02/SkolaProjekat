@@ -20,6 +20,8 @@ namespace ProjekatSkola.Entiteti
 
         public Ocena()
         {
+            JeDobio = new Ucenik();
+            JeIz = new Predmet();
         }    
     }
 }

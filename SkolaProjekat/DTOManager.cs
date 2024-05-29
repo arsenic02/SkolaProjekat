@@ -86,16 +86,23 @@ namespace SkolaProjekat
             {
                 ISession s = DataLayer.GetSession();
 
-                ProjekatSkola.Entiteti.Ucenik o = s.Load<ProjekatSkola.Entiteti.Ucenik>(u.JedinstveniUpisniBroj);
+                Ucenik o = s.Load<Ucenik>(u.JedinstveniUpisniBroj);
                 o.Ime = u.Ime;
                 o.Prezime = u.Prezime;
                 o.AdresaStanovanja = u.AdresaStanovanja;
                 o.DatumUpisa = u.DatumUpisa;
-                ProjekatSkola.Entiteti.Razred razred = s.Load<ProjekatSkola.Entiteti.Razred>(u.PohadjaRazred.RedniBrojRazreda);
+                Razred razred = new Razred();
+                if (u.PohadjaRazred != null)
+                {
+                    razred = s.Load<Razred> (u.PohadjaRazred.RedniBrojRazreda);                 
+                }              
                 o.PohadjaRazred = razred;
-                ProjekatSkola.Entiteti.Smer smer = s.Load<ProjekatSkola.Entiteti.Smer>(u.JeUpisan.NazivSmera);
+                Smer smer = new Smer();
+                if (u.JeUpisan != null)
+                {
+                    smer = s.Load<Smer>(u.JeUpisan.NazivSmera);
+                }               
                 o.JeUpisan = smer;
-
                 s.Update(o);
                 s.Flush();
                 s.Close();
@@ -115,11 +122,19 @@ namespace SkolaProjekat
                 ISession s = DataLayer.GetSession();
 
                 ProjekatSkola.Entiteti.Ucenik o = s.Load<ProjekatSkola.Entiteti.Ucenik>(jbu);
-                ProjekatSkola.Entiteti.Razred razred = s.Load<ProjekatSkola.Entiteti.Razred>(o.PohadjaRazred.RedniBrojRazreda);
-                ProjekatSkola.Entiteti.Smer smer = s.Load<ProjekatSkola.Entiteti.Smer>(o.JeUpisan.NazivSmera);
-
-                RazredBasic razredBasic = new RazredBasic(o.PohadjaRazred.RedniBrojRazreda);
-                SmerBasic smerBasic = new SmerBasic(o.JeUpisan.NazivSmera, o.JeUpisan.MaksimalanBrojUcenika);
+                RazredBasic razredBasic= new RazredBasic();
+                SmerBasic smerBasic = new SmerBasic();
+                if (o.PohadjaRazred != null)
+                {
+                    ProjekatSkola.Entiteti.Razred razred = s.Load<ProjekatSkola.Entiteti.Razred>(o.PohadjaRazred.RedniBrojRazreda);
+                     razredBasic = new RazredBasic(o.PohadjaRazred.RedniBrojRazreda);
+                }
+                if(o.JeUpisan!=null)
+                {
+                    ProjekatSkola.Entiteti.Smer smer = s.Load<ProjekatSkola.Entiteti.Smer>(o.JeUpisan.NazivSmera);
+                    smerBasic = new SmerBasic(o.JeUpisan.NazivSmera, o.JeUpisan.MaksimalanBrojUcenika);
+                }
+                
                 ub = new UcenikBasic(o.JedinstveniUpisniBroj, o.Ime, o.Prezime, o.AdresaStanovanja, o.DatumUpisa, razredBasic, smerBasic);
 
                 s.Close();
@@ -215,6 +230,8 @@ namespace SkolaProjekat
                 ISession s = DataLayer.GetSession();
                 Smer sm = s.Load<Smer>(nazivSmera);
 
+                sm.Ucenici.Clear();
+                sm.Predmeti.Clear();
                 s.Delete(sm);
                 s.Flush();
                 s.Close();
@@ -876,7 +893,7 @@ namespace SkolaProjekat
                 using (ISession s = DataLayer.GetSession())
                 {
                     Ocena o = s.Load<Ocena>(id);
-                    ob = new OcenaBasic(o.Id, o.NazivPredmeta, o.JedinstveniBrojUcenika, o.DatumDobijanjaOcene, o.NumerickaVrednost, o.TekstualniOpis);
+                    ob = new OcenaBasic(o.Id, o.JeIz, o.JedinstveniBrojUcenika, o.DatumDobijanjaOcene, o.NumerickaVrednost, o.TekstualniOpis,o.JeDobio);
                     s.Close();
                 }
             }
@@ -935,15 +952,32 @@ namespace SkolaProjekat
                 ocena.DatumDobijanjaOcene = o.DatumDobijanjaOcene;
                 ocena.NumerickaVrednost = o.NumerickaVrednost;
                 ocena.TekstualniOpis = o.TekstualniOpis;
+                /*
+                OpsteobrazovniPredmet oop = new OpsteobrazovniPredmet();
+                oop = s.Get<OpsteobrazovniPredmet>(o.NazivPredmeta);
+                StrucniPredmet str = new StrucniPredmet();
+                if(oop==null)
+                { 
+                     str = s.Get<StrucniPredmet>(o.NazivPredmeta);
+                    if (str != null)
+                    { 
+                        ocena.JeIz = str;
+                        ocena.JeIz.TipPredmeta = "STR";
+                    }
+                }
+                else
+                {
+                    ocena.JeIz = oop;
+                    ocena.JeIz.TipPredmeta = "OOP";
+                }
 
-                Predmet p = new Predmet();
-                p = s.Load<Predmet>(o.NazivPredmeta);
+               // Predmet p = new Predmet();
+               // p = s.Load<Predmet>(o.NazivPredmeta);
                 Ucenik u = new Ucenik();
                 u = s.Load<Ucenik>(o.JedinstveniBrojUcenika);
 
                 ocena.JeDobio = u;
-                ocena.JeIz = p;
-
+                */
                 s.SaveOrUpdate(ocena);
                 s.Flush();
                 s.Close();

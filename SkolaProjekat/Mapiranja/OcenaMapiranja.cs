@@ -17,6 +17,7 @@ namespace SkolaProjekat.Mapiranja
             Id(x => x.Id).Column("Jedinstveni_kod_ocene").GeneratedBy.Identity();
 
             //Map(x => x.JedinstveniBrojUcenika).Column("JBU");
+           //Map(x => x.NazivPredmeta).Column("NAZIV_PREDMETA");
             // 1:N Ucenik-Ocena
             References(p => p.JeDobio).Column("JBU").LazyLoad();
             References(p => p.JeIz).Column("NAZIV_PREDMETA").LazyLoad();

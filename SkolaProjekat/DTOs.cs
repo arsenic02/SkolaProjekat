@@ -308,6 +308,24 @@ namespace SkolaProjekat
             TekstualniOpis = tekstualniOpis;
             this.Id = Id;
         }
+        public OcenaBasic(int Id, Predmet jeIz, string JBU, DateTime datumDobijanjaOcene, int numerickaVrednost, string tekstualniOpis, Ucenik ucenik)
+        {
+            JeIz = new PredmetBasic();
+            JeDobio = new UcenikBasic();
+            NazivPredmeta = jeIz.NazivPredmeta;
+            JeIz.NazivPredmeta = jeIz.NazivPredmeta;
+           // JeIz.TipPredmeta = jeIz.TipPredmeta;
+            JeIz.NazivSmera = jeIz.NazivSmera;
+            JedinstveniBrojUcenika = JBU;
+            DatumDobijanjaOcene = datumDobijanjaOcene;
+            NumerickaVrednost = numerickaVrednost;
+            TekstualniOpis = tekstualniOpis;
+            JeDobio.Ime = ucenik.Ime;
+            JeDobio.Prezime = ucenik.Prezime;
+            JeDobio.AdresaStanovanja = ucenik.AdresaStanovanja;
+            JeDobio.DatumUpisa = ucenik.DatumUpisa;
+            this.Id = Id;
+        }
     }
     public class OcenaPregled
     {
