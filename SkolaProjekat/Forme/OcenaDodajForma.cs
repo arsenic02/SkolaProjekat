@@ -50,6 +50,7 @@ namespace SkolaProjekat.Forme
             {
                 if(cbNazivPredmeta.SelectedIndex!=-1)
                 {
+                    ocena.Id = Int32.Parse(tbId.Text);
                     ocena.NazivPredmeta = cbNazivPredmeta.SelectedItem.ToString();
                     ocena.JedinstveniBrojUcenika = ucenik;
                     ocena.NumerickaVrednost = Int32.Parse(tbNumerickaVrednost.Text);

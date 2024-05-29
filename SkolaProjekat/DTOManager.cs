@@ -946,7 +946,9 @@ namespace SkolaProjekat
             {
                 ISession s = DataLayer.GetSession();
 
+                
                 Ocena ocena = new Ocena();
+                ocena.Id = o.Id;
                 ocena.NazivPredmeta = o.NazivPredmeta;
                 ocena.JedinstveniBrojUcenika = o.JedinstveniBrojUcenika;
                 ocena.DatumDobijanjaOcene = o.DatumDobijanjaOcene;
